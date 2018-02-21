@@ -3,3 +3,9 @@ description = Allows users to post content using applications that support XML-R
 package = Core - optional
 version = VERSION
 core = 6.x
+
+; Information added by Drupal 6 LTS vendors on 2018-02-21
+version = "6.39"
+core = "6.x"
+project = "drupal"
+datestamp = "1519239354"
