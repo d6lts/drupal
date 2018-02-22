@@ -45,7 +45,7 @@
       // @todo Consider backporting code from newer jQuery versions to check for
       //   a cross-domain request here, rather than using Drupal.urlIsLocal() to
       //   block scripts from all URLs that are not on the same site.
-      if (!type && !Drupal.urlIsLocal(s.url)) {
+      if (!type && (!s || !Drupal.urlIsLocal(s.url))) {
         var content_type = xhr.getResponseHeader('content-type') || '';
         if (content_type.indexOf('javascript') >= 0) {
           // Default to a safe data type.
