@@ -213,6 +213,72 @@ Drupal.formatPlural = function(count, singular, plural, args) {
 };
 
 /**
+ * Returns the passed in URL as an absolute URL.
+ *
+ * @param url
+ *   The URL string to be normalized to an absolute URL.
+ *
+ * @return
+ *   The normalized, absolute URL.
+ *
+ * @see https://github.com/angular/angular.js/blob/v1.4.4/src/ng/urlUtils.js
+ * @see https://grack.com/blog/2009/11/17/absolutizing-url-in-javascript
+ * @see https://github.com/jquery/jquery-ui/blob/1.11.4/ui/tabs.js#L53
+ */
+Drupal.absoluteUrl = function (url) {
+  var urlParsingNode = document.createElement('a');
+
+  // Decode the URL first; this is required by IE <= 6. Decoding non-UTF-8
+  // strings may throw an exception.
+  try {
+    url = decodeURIComponent(url);
+  } catch (e) {}
+
+  urlParsingNode.setAttribute('href', url);
+
+  // IE <= 7 normalizes the URL when assigned to the anchor node similar to
+  // the other browsers.
+  return urlParsingNode.cloneNode(false).href;
+};
+
+/**
+ * Returns true if the URL is within Drupal's base path.
+ *
+ * @param url
+ *   The URL string to be tested.
+ *
+ * @return
+ *   Boolean true if local.
+ *
+ * @see https://github.com/jquery/jquery-ui/blob/1.11.4/ui/tabs.js#L58
+ */
+Drupal.urlIsLocal = function (url) {
+  // Always use browser-derived absolute URLs in the comparison, to avoid
+  // attempts to break out of the base path using directory traversal.
+  var absoluteUrl = Drupal.absoluteUrl(url);
+  var protocol = location.protocol;
+
+  // Consider URLs that match this site's base URL but use HTTPS instead of HTTP
+  // as local as well.
+  if (protocol === 'http:' && absoluteUrl.indexOf('https:') === 0) {
+    protocol = 'https:';
+  }
+  var baseUrl = protocol + '//' + location.host + Drupal.settings.basePath.slice(0, -1);
+
+  // Decoding non-UTF-8 strings may throw an exception.
+  try {
+    absoluteUrl = decodeURIComponent(absoluteUrl);
+  } catch (e) {}
+  try {
+    baseUrl = decodeURIComponent(baseUrl);
+  } catch (e) {}
+
+  // The given URL matches the site's base URL, or has a path under the site's
+  // base URL.
+  return absoluteUrl === baseUrl || absoluteUrl.indexOf(baseUrl + '/') === 0;
+};
+
+/**
  * Generate the themed representation of a Drupal object.
  *
  * All requests for themed output must go through this function. It examines
