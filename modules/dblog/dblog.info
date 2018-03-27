@@ -3,3 +3,9 @@ description = Logs and records system events to the database.
 package = Core - optional
 version = VERSION
 core = 6.x
+
+; Information added by Drupal 6 LTS vendors on 2018-03-27
+version = "6.42"
+core = "6.x"
+project = "drupal"
+datestamp = "1522186448"
