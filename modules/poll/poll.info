@@ -3,3 +3,9 @@ description = Allows your site to capture votes on different topics in the form 
 package = Core - optional
 version = VERSION
 core = 6.x
+
+; Information added by Drupal 6 LTS vendors on 2018-03-29
+version = "6.43"
+core = "6.x"
+project = "drupal"
+datestamp = "1522356049"
