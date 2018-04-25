@@ -1,3 +1,22 @@
+Drupal 6.43, 2018-03-28 - Long term support
+---------------------------------------
+- Bug fixes to changes in 6.42 that affects the OG module.
+
+Drupal 6.42, 2018-03-28 - Long term support
+---------------------------------------
+- Fixed security issues (multiple vulnerabilities), backport. See SA-CORE-2018-002.
+
+Drupal 6.40, 2018-02-22 - Long term support
+---------------------------------------
+- Bug fixes to changes in 6.39
+
+Drupal 6.40, 2018-02-22 - Long term support
+---------------------------------------
+- Bug fixes to changes in 6.39
+
+Drupal 6.39, 2018-02-21 - Long term support
+---------------------------------------
+- Fixed security issues (multiple vulnerabilities), backport. See SA-CORE-2018-001.
 
 Drupal 6.38, 2016-02-24 - Final release
 ---------------------------------------
