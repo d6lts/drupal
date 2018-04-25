@@ -3,3 +3,9 @@ description = Allows users to structure site pages in a hierarchy or outline.
 package = Core - optional
 version = VERSION
 core = 6.x
+
+; Information added by Drupal 6 LTS vendors on 2018-04-25
+version = "6.44"
+core = "6.x"
+project = "drupal"
+datestamp = "1524672920"
