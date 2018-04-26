@@ -1676,8 +1676,6 @@ function _drupal_bootstrap_sanitize_input(&$input, $whitelist = array()) {
 function _drupal_bootstrap_clean_destination() {
   $dangerous_keys = array();
 
-  $log_sanitized_keys = variable_get('sanitize_input_logging', FALSE);
-
   $parts = _drupal_parse_url($_GET['destination']);
   if (!empty($parts['query'])) {
     $whitelist = variable_get('sanitize_input_whitelist', array());
