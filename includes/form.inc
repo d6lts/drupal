@@ -737,7 +737,7 @@ function _form_validate($elements, &$form_state, $form_id = NULL) {
       // A simple call to empty() will not cut it here as some fields, like
       // checkboxes, can return a valid value of '0'. Instead, check the
       // length if it's a string, and the item count if it's an array.
-      if ($elements['#required'] && (!count($elements['#value']) || (is_string($elements['#value']) && strlen(trim($elements['#value'])) == 0))) {
+      if ($elements['#required'] && (is_array($elements['#value']) && !count($elements['#value']) || (is_string($elements['#value']) && strlen(trim($elements['#value'])) == 0))) {
         form_error($elements, $t('!name field is required.', array('!name' => $elements['#title'])));
       }
 
