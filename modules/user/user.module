@@ -1428,8 +1428,7 @@ function user_authenticate_finalize(&$edit) {
   db_query("UPDATE {users} SET login = %d WHERE uid = %d", $user->login, $user->uid);
 
   // Regenerate the session ID to prevent against session fixation attacks.
-  // TODO: We shouldn't comment this out, but fix sess_regenerate() to work with PHP 7
-  //sess_regenerate();
+  sess_regenerate();
   user_module_invoke('login', $edit, $user);
 }
 
