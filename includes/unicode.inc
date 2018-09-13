@@ -342,6 +342,13 @@ function decode_entities($text, $exclude = array()) {
   // Flip the exclude list so that we can do quick lookups later.
   $exclude = array_flip($exclude);
 
+  if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
+    // The PREG_REPLACE_EVAL modifier 'e' is being used to allow for a callback
+    // with PHP versions earlier than 5.3, where we don't have closures (see
+    // http://php.net/manual/en/reference.pcre.pattern.modifiers).
+    return preg_replace('/&(#x?)?([A-Za-z0-9]+);/e', '_decode_entities("$1", "$2", "$0", $html_entities, $exclude)', $text);
+  }
+
   // Use a regexp to select all entities in one pass, to avoid decoding 
   // double-escaped entities twice.
   return preg_replace_callback('/&(#x?)?([A-Za-z0-9]+);/', function ($matches) use ($html_entities, $exclude) {
