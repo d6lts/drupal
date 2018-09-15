@@ -124,6 +124,7 @@ function sess_write($key, $value) {
  * Called when an anonymous user becomes authenticated or vice-versa.
  */
 function sess_regenerate() {
+  global $user;
   $old_session_id = session_id();
 
   // We code around http://bugs.php.net/bug.php?id=32802 by destroying
@@ -135,7 +136,12 @@ function sess_regenerate() {
     setcookie(session_name(), '', time() - 42000, '/');
   }
 
+  // On PHP7, sess_read($key) is being called with the new session key but not
+  // on PHP5. This failsafe stores the initial user object, which on PHP5 should
+  // be just the same, and restore it later on.
+  $account = $user;
   session_regenerate_id();
+  $user = $account;
 
   db_query("UPDATE {sessions} SET sid = '%s' WHERE sid = '%s'", session_id(), $old_session_id);
 }
