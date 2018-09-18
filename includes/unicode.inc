@@ -362,7 +362,7 @@ function decode_entities($text, $exclude = array()) {
   $exclude = array_flip($exclude);
 
   // Use object instead of closure to retain PHP 5.2 compatibility.
-  $callback = new DrupalDecodeEntitiesCallback($html_entities, $execlude);
+  $callback = new DrupalDecodeEntitiesCallback($html_entities, $exclude);
 
   // Use a regexp to select all entities in one pass, to avoid decoding 
   // double-escaped entities twice.
