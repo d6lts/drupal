@@ -1426,6 +1426,12 @@ function form_set_value($form_item, $value, &$form_state) {
 function _form_set_value(&$form_values, $form_item, $parents, $value) {
   $parent = array_shift($parents);
   if (empty($parents)) {
+    // This makes PHP 7 have the same behavior as PHP 5 when the value is an
+    // empty string, rather than an array. This is depended on surprisingly
+    // often in Drupal 6 contrib.
+    if ($form_values === '') {
+      $form_values = array();
+    }
     $form_values[$parent] = $value;
   }
   else {
