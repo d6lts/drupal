@@ -32,6 +32,7 @@ function locale_languages_overview_form() {
 
   $options = array();
   $form['weight'] = array('#tree' => TRUE);
+  $enabled = array();
   foreach ($languages as $langcode => $language) {
     // Language code should contain no markup, but is emitted
     // by radio and checkbox options.
@@ -70,6 +71,7 @@ function locale_languages_overview_form() {
  */
 function theme_locale_languages_overview_form($form) {
   $default = language_default();
+  $rows = array();
   foreach ($form['name'] as $key => $element) {
     // Do not take form control structures.
     if (is_array($element) && element_child($key)) {
@@ -1315,6 +1317,7 @@ function _locale_import_one_string($op, $value = NULL, $mode = NULL, $lang = NUL
           }
           $translation = array_map('_locale_import_append_plural', $value['msgstr'], $entries);
           $english = array_map('_locale_import_append_plural', $english, $entries);
+          $plid = 0;
           foreach ($translation as $key => $trans) {
             if ($key == 0) {
               $plid = 0;

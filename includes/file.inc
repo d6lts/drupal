@@ -35,7 +35,7 @@ define('FILE_STATUS_PERMANENT', 1);
  * Create the download path to a file.
  *
  * @param $path A string containing the path of the file to generate URL for.
- * @return A string containing a URL that can be used to download the file.
+ * @return string containing a URL that can be used to download the file.
  */
 function file_create_url($path) {
   // Strip file_directory_path from $path. We only include relative paths in URLs.
@@ -56,7 +56,7 @@ function file_create_url($path) {
  *
  * @param $dest A string containing the path to verify. If this value is
  *   omitted, Drupal's 'files' directory will be used.
- * @return A string containing the path to file, with file system directory
+ * @return string containing the path to file, with file system directory
  *   appended if necessary, or FALSE if the path is invalid (i.e. outside the
  *   configured 'files' or temp directories).
  */
@@ -101,7 +101,7 @@ function file_create_path($dest = 0) {
  *   handlers from running, and instead display the form along with the
  *   error messages.
  *
- * @return
+ * @return boolean
  *   FALSE if the directory does not exist or is not writable, even after
  *   any optional actions have been carried out. Otherwise, TRUE is returned.
  */
@@ -176,8 +176,7 @@ function file_create_htaccess($directory, $form_item = NULL, $force_overwrite = 
 /**
  * Returns the standard .htaccess lines that Drupal writes to file directories.
  *
- * @return
- *   A string representing the desired contents of the .htaccess file.
+ * @return string representing the desired contents of the .htaccess file.
  *
  * @see file_create_htaccess()
  */
@@ -219,7 +218,7 @@ EOF;
  *
  * @param $path A string containing a file path. This will be set to the
  *   directory's path.
- * @return If the directory is not in a Drupal writable directory, FALSE is
+ * @return boolean|string If the directory is not in a Drupal writable directory, FALSE is
  *   returned. Otherwise, the base name of the path is returned.
  */
 function file_check_path(&$path) {
@@ -250,7 +249,7 @@ function file_check_path(&$path) {
  *
  * @param $source A string set to the file to check.
  * @param $directory A string where the file should be located.
- * @return 0 for invalid path or the real path of the source.
+ * @return int|string 0 for invalid path or the real path of the source.
  */
 function file_check_location($source, $directory = '') {
   $check = realpath($source);
@@ -292,7 +291,7 @@ function file_check_location($source, $directory = '') {
  *   - FILE_EXISTS_RENAME: Append _{incrementing number} until the filename is
  *     unique.
  *   - FILE_EXISTS_ERROR: Do nothing and return FALSE.
- * @return
+ * @return boolean
  *   TRUE for success, FALSE for failure.
  */
 function file_copy(&$source, $dest = 0, $replace = FILE_EXISTS_RENAME) {
@@ -371,7 +370,7 @@ function file_copy(&$source, $dest = 0, $replace = FILE_EXISTS_RENAME) {
  *   - FILE_EXISTS_RENAME - Append _{incrementing number} until the filename is
  *     unique
  *   - FILE_EXISTS_ERROR - Do nothing and return FALSE.
- * @return The destination file path or FALSE if the file already exists and
+ * @return boolean|string The destination file path or FALSE if the file already exists and
  *   FILE_EXISTS_ERROR was specified.
  */
 function file_destination($destination, $replace) {
@@ -413,7 +412,7 @@ function file_destination($destination, $replace) {
  *   - FILE_EXISTS_RENAME: Append _{incrementing number} until the filename is
  *     unique.
  *   - FILE_EXISTS_ERROR: Do nothing and return FALSE.
- * @return
+ * @return boolean
  *   TRUE for success, FALSE for failure.
  */
 function file_move(&$source, $dest = 0, $replace = FILE_EXISTS_RENAME) {
@@ -459,7 +458,7 @@ function file_move(&$source, $dest = 0, $replace = FILE_EXISTS_RENAME) {
  *   If TRUE, drupal_set_message() will be called to display a message if the
  *   file name was changed.
  *
- * @return
+ * @return string
  *   The potentially modified $filename.
  */
 function file_munge_filename($filename, $extensions, $alerts = TRUE) {
@@ -513,7 +512,7 @@ function file_unmunge_filename($filename) {
  *
  * @param $basename string filename
  * @param $directory string directory
- * @return
+ * @return string
  */
 function file_create_filename($basename, $directory) {
   $dest = $directory .'/'. $basename;
@@ -542,7 +541,7 @@ function file_create_filename($basename, $directory) {
  * Delete a file.
  *
  * @param $path A string containing a file path.
- * @return TRUE for success, FALSE for failure.
+ * @return boolean TRUE for success, FALSE for failure.
  */
 function file_delete($path) {
   if (is_file($path)) {
@@ -591,7 +590,7 @@ function file_space_used($uid = NULL) {
  *     is unique.
  *   - FILE_EXISTS_ERROR: Do nothing and return FALSE.
  *
- * @return
+ * @return Object
  *   An object containing the file information, or 0 in the event of an error.
  */
 function file_save_upload($source, $validators = array(), $dest = FALSE, $replace = FILE_EXISTS_RENAME) {
@@ -717,8 +716,7 @@ function file_save_upload($source, $validators = array(), $dest = FALSE, $replac
  *
  * @param $file
  *   A Drupal file object.
- * @return
- *   An array. If the file name is too long, it will contain an error message.
+ * @return array If the file name is too long, it will contain an error message.
  */
 function file_validate_name_length($file) {
   $errors = array();
@@ -739,8 +737,7 @@ function file_validate_name_length($file) {
  *   A string with a space separated list of allowed file extensions, not
  *   including the period. For example, 'bmp jpg gif png'.
  *
- * @return
- *   An array. If the file extension is not allowed, it will contain an error
+ * @return array If the file extension is not allowed, it will contain an error
  *   message.
  */
 function file_validate_extensions($file, $extensions) {
@@ -770,8 +767,7 @@ function file_validate_extensions($file, $extensions) {
  * @param $user_limit
  *   An integer specifying the maximum number of bytes the user is allowed. Zero
  *   indicates that no limit should be enforced.
- * @return
- *   An array. If the file size exceeds limits, it will contain an error message.
+ * @return array If the file size exceeds limits, it will contain an error message.
  */
 function file_validate_size($file, $file_limit = 0, $user_limit = 0) {
   global $user;
@@ -797,8 +793,7 @@ function file_validate_size($file, $file_limit = 0, $user_limit = 0) {
  *
  * @param $file
  *   A Drupal file object.
- * @return
- *   An array. If the file is not an image, it will contain an error message.
+ * @return array If the file is not an image, it will contain an error message.
  */
 function file_validate_is_image(&$file) {
   $errors = array();
@@ -825,8 +820,7 @@ function file_validate_is_image(&$file) {
  * @param $minimum_dimensions
  *   An optional string in the form WIDTHxHEIGHT. This will check that the image
  *   meets a minimum size. A value of 0 indicates no restriction.
- * @return
- *   An array. If the file is an image and did not meet the requirements, it
+ * @return array If the file is an image and did not meet the requirements, it
  *   will contain an error message.
  */
 function file_validate_image_resolution(&$file, $maximum_dimensions = 0, $minimum_dimensions = 0) {
@@ -875,7 +869,7 @@ function file_validate_image_resolution(&$file, $maximum_dimensions = 0, $minimu
  *   - FILE_EXISTS_RENAME - Append _{incrementing number} until the filename is unique
  *   - FILE_EXISTS_ERROR - Do nothing and return FALSE.
  *
- * @return A string containing the resulting filename or 0 on error
+ * @return string containing the resulting filename or 0 on error
  */
 function file_save_data($data, $dest, $replace = FILE_EXISTS_RENAME) {
   $temp = file_directory_temp();
@@ -905,7 +899,7 @@ function file_save_data($data, $dest, $replace = FILE_EXISTS_RENAME) {
  *   - FILE_STATUS_PERMANENT
  *   - FILE_STATUS_TEMPORARY
  *
- * @return FALSE on failure, TRUE on success and $file->status will contain the
+ * @return boolean FALSE on failure, TRUE on success and $file->status will contain the
  *     status.
  */
 function file_set_status(&$file, $status) {
@@ -998,7 +992,7 @@ function file_download() {
  * @param $filepath
  *   The path for the file whose headers should be retrieved.
  *
- * @return
+ * @return array
  *   If access is allowed, headers for the file, suitable for passing to
  *   file_transfer(). If access is not allowed, an empty array will be returned.
  *
@@ -1030,8 +1024,7 @@ function file_download_headers($filepath) {
  * @param $filepath
  *   The path for the file whose headers should be retrieved.
  *
- * @return
- *   Boolean TRUE if access is allowed. FALSE if access is not allowed.
+ * @return boolean TRUE if access is allowed. FALSE if access is not allowed.
  *
  * @see file_download_headers()
  * @see hook_file_download()
@@ -1069,7 +1062,7 @@ function file_download_access($filepath) {
  *   Current depth of recursion. This parameter is only used internally and
  *   should not be passed in.
  *
- * @return
+ * @return array
  *   An associative array (keyed on the provided key) of objects with
  *   "filename", "basename", and "name" members corresponding to the
  *   matching files.
@@ -1110,7 +1103,7 @@ function file_scan_directory($dir, $mask, $nomask = array('.', '..', 'CVS'), $ca
 /**
  * Determine the default temporary directory.
  *
- * @return A string containing a temp directory.
+ * @return string containing a temp directory.
  */
 function file_directory_temp() {
   $temporary_directory = variable_get('file_directory_temp', NULL);
@@ -1151,7 +1144,7 @@ function file_directory_temp() {
 /**
  * Determine the default 'files' directory.
  *
- * @return A string containing the path to Drupal's 'files' directory.
+ * @return string containing the path to Drupal's 'files' directory.
  */
 function file_directory_path() {
   return variable_get('file_directory_path', conf_path() .'/files');
@@ -1160,7 +1153,7 @@ function file_directory_path() {
 /**
  * Determine the maximum file upload size by querying the PHP settings.
  *
- * @return
+ * @return int
  *   A file size limit in bytes based on the PHP upload_max_filesize and post_max_size
  */
 function file_upload_max_size() {
@@ -1183,7 +1176,7 @@ function file_upload_max_size() {
  *   An optional array of extension to media type mappings in the form
  *   'extension1|extension2|...' => 'type'.
  *
- * @return
+ * @return string
  *   The internet media type registered for the extension or application/octet-stream for unknown extensions.
  */
 function file_get_mimetype($filename, $mapping = NULL) {

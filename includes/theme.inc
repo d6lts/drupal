@@ -621,6 +621,7 @@ function theme() {
   }
 
   if (is_array($hook)) {
+    $candidate = '';
     foreach ($hook as $candidate) {
       if (isset($hooks[$candidate])) {
         break;
@@ -1296,7 +1297,7 @@ function theme_image($path, $alt = '', $title = '', $attributes = NULL, $getsize
  *
  * @param $breadcrumb
  *   An array containing the breadcrumb links.
- * @return a string containing the breadcrumb output.
+ * @return string containing the breadcrumb output.
  */
 function theme_breadcrumb($breadcrumb) {
   if (!empty($breadcrumb)) {
@@ -1307,7 +1308,7 @@ function theme_breadcrumb($breadcrumb) {
 /**
  * Return a themed help message.
  *
- * @return a string containing the helptext for the current page.
+ * @return string containing the helptext for the current page.
  */
 function theme_help() {
   if ($help = menu_get_active_help()) {
@@ -1410,6 +1411,7 @@ function theme_table($header, $rows, $attributes = array(), $caption = NULL) {
       $attributes = array();
 
       // Check if we're dealing with a simple or complex row
+      $cells = array();
       if (isset($row['data'])) {
         foreach ($row as $key => $value) {
           if ($key == 'data') {
@@ -1545,6 +1547,7 @@ function theme_item_list($items = array(), $title = NULL, $type = 'ul', $attribu
     foreach ($items as $i => $item) {
       $attributes = array();
       $children = array();
+      $data = '';
       if (is_array($item)) {
         foreach ($item as $key => $value) {
           if ($key == 'data') {

@@ -228,6 +228,7 @@ function xmlrpc_server_multicall($methodcalls) {
     $method = $call['methodName'];
     $method_count[$method] = isset($method_count[$method]) ? $method_count[$method] + 1 : 1;
     $params = $call['params'];
+    $result = null;
     if ($method == 'system.multicall') {
       $result = xmlrpc_error(-32600, t('Recursive calls to system.multicall are forbidden.'));
     }

@@ -556,6 +556,7 @@ function drupal_get_filename($type, $name, $filename = NULL) {
  * file.
  */
 function variable_init($conf = array()) {
+  $variables = array();
   // NOTE: caching the variables improves performance by 20% when serving cached pages.
   if ($cached = cache_get('variables', 'cache')) {
     $variables = $cached->data;
@@ -1629,7 +1630,7 @@ function _drupal_bootstrap_sanitize_request() {
     $sanitized_keys = array_unique($sanitized_keys);
 
     if (count($sanitized_keys) && !empty($conf['sanitize_input_logging'])) {
-      trigger_error(check_plain(sprintf('Potentially unsafe keys removed from request parameters: %s', implode(', ', $sanitized_keys)), E_USER_WARNING));
+      trigger_error(check_plain(sprintf('Potentially unsafe keys removed from request parameters: %s', implode(', ', $sanitized_keys))));
     }
 
     $sanitized = TRUE;

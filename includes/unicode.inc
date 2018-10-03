@@ -134,6 +134,7 @@ function drupal_xml_parser_create(&$data) {
   }
 
   // Check for an encoding declaration in the XML prolog if no BOM was found.
+  $match = array();
   if (!$bom && @ereg('^<\?xml[^>]+encoding="([^"]+)"', $data, $match)) {
     $encoding = $match[1];
   }
@@ -409,6 +410,8 @@ function _decode_entities($prefix, $codepoint, $original, &$html_entities, &$exc
          . chr(0x80 | (($codepoint >> 12) & 0x3F))
          . chr(0x80 | (($codepoint >> 6)  & 0x3F))
          . chr(0x80 | ( $codepoint        & 0x3F));
+  } else {
+    $str = '';
   }
   // Check for excluded characters
   if (isset($exclude[$str])) {

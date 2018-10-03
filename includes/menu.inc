@@ -1785,6 +1785,7 @@ function _menu_link_build($item) {
 function _menu_navigation_links_rebuild($menu) {
   // Add normal and suggested items as links.
   $menu_links = array();
+  $sort = array();
   foreach ($menu as $path => $item) {
     if ($item['_visible']) {
       $item = _menu_link_build($item);
@@ -2276,6 +2277,8 @@ function _menu_router_build($callbacks) {
   // First pass: separate callbacks from paths, making paths ready for
   // matching. Calculate fitness, and fill some default values.
   $menu = array();
+  $sort = array();
+  $masks = array();
   foreach ($callbacks as $path => $item) {
     $load_functions = array();
     $to_arg_functions = array();

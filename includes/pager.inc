@@ -146,6 +146,7 @@ function theme_pager($tags = array(), $limit = 10, $element = 0, $parameters = a
   $li_next = theme('pager_next', (isset($tags[3]) ? $tags[3] : t('next ›')), $limit, $element, 1, $parameters);
   $li_last = theme('pager_last', (isset($tags[4]) ? $tags[4] : t('last »')), $limit, $element, $parameters);
 
+  $items = array();
   if ($pager_total[$element] > 1) {
     if ($li_first) {
       $items[] = array(

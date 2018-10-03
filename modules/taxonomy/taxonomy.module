@@ -1306,7 +1306,7 @@ function taxonomy_node_update_index(&$node) {
  *   comma (,) means AND
  *   plus (+) means OR
  *
- * @return an associative array with an operator key (either 'and'
+ * @return array an associative array with an operator key (either 'and'
  *   or 'or') and a tid key containing an array of the term ids.
  */
 function taxonomy_terms_parse_string($str_tids) {

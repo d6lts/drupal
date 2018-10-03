@@ -93,6 +93,8 @@ function drupal_get_form($form_id) {
     // If the previous bit of code didn't result in a populated $form
     // object, we're hitting the form for the first time and we need
     // to build it from scratch.
+    $form_build_id = null;
+    $original_form = null;
     if (!isset($form)) {
       $form_state['post'] = $_POST;
       // Use a copy of the function's arguments for manipulation
@@ -1787,6 +1789,7 @@ function expand_date($element) {
   $order = array_keys($sort);
 
   // Output multi-selector for date.
+  $options = array();
   foreach ($order as $type) {
     switch ($type) {
       case 'day':
@@ -2276,6 +2279,7 @@ function theme_password($element) {
  * Expand weight elements into selects.
  */
 function process_weight($element) {
+  $weights = array();
   for ($n = (-1 * $element['#delta']); $n <= $element['#delta']; $n++) {
     $weights[$n] = $n;
   }

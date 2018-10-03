@@ -261,6 +261,7 @@ function xmlrpc_message_cdata($parser, $cdata) {
 
 function xmlrpc_message_tag_close($parser, $tag) {
   $xmlrpc_message = xmlrpc_message_get();
+  $value = '';
   $value_flag = FALSE;
   switch ($tag) {
     case 'int':
