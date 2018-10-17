@@ -1,3 +1,7 @@
+Drupal 6.46, 2018-10-17 - Long term support
+---------------------------------------
+- Fixed security issues (open redirect), backport. See SA-CORE-2018-006.
+
 Drupal 6.45, 2018-10-04 - Long term support
 ---------------------------------------
 - Initial support for PHP 7.2.
