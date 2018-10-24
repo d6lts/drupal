@@ -26,22 +26,22 @@
    *
    * See https://github.com/jquery/jquery/issues/2432
    */
-  if ($.ajaxPrefilter) {
+  if (jQuery.ajaxPrefilter) {
     // For newer versions of jQuery, use an Ajax prefilter to prevent
     // auto-executing script tags from untrusted domains. This is similar to the
     // fix that is built in to jQuery 3.0 and higher.
-    $.ajaxPrefilter(function (s) {
+      jQuery.ajaxPrefilter(function (s) {
       if (s.crossDomain) {
         s.contents.script = false;
       }
     });
   }
-  else if ($.httpData) {
+  else if (jQuery.httpData) {
     // For the version of jQuery that ships with Drupal core, override
     // jQuery.httpData to prevent auto-detecting "script" data types from
     // untrusted domains.
-    var jquery_httpData = $.httpData;
-    $.httpData = function (xhr, type, s) {
+    var jquery_httpData = jQuery.httpData;
+      jQuery.httpData = function (xhr, type, s) {
       // @todo Consider backporting code from newer jQuery versions to check for
       //   a cross-domain request here, rather than using Drupal.urlIsLocal() to
       //   block scripts from all URLs that are not on the same site.
@@ -54,7 +54,7 @@
       }
       return jquery_httpData.call(this, xhr, type, s);
     };
-    $.httpData.prototype = jquery_httpData.prototype;
+    jQuery.httpData.prototype = jquery_httpData.prototype;
   }
 })();
 
@@ -324,21 +324,21 @@ Drupal.parseJson = function (data) {
 Drupal.freezeHeight = function () {
   Drupal.unfreezeHeight();
   var div = document.createElement('div');
-  $(div).css({
+  jQuery(div).css({
     position: 'absolute',
     top: '0px',
     left: '0px',
     width: '1px',
-    height: $('body').css('height')
+    height: jQuery('body').css('height')
   }).attr('id', 'freeze-height');
-  $('body').append(div);
+  jQuery('body').append(div);
 };
 
 /**
  * Unfreeze the body height
  */
 Drupal.unfreezeHeight = function () {
-  $('#freeze-height').remove();
+  jQuery('#freeze-height').remove();
 };
 
 /**
@@ -377,7 +377,7 @@ Drupal.getSelection = function (element) {
  */
 Drupal.ahahError = function(xmlhttp, uri) {
   if (xmlhttp.status == 200) {
-    if (jQuery.trim($(xmlhttp.responseText).text())) {
+    if (jQuery.trim(jQuery(xmlhttp.responseText).text())) {
       var message = Drupal.t("An error occurred. \n@uri\n@text", {'@uri': uri, '@text': xmlhttp.responseText });
     }
     else {
@@ -393,11 +393,11 @@ Drupal.ahahError = function(xmlhttp, uri) {
 // Global Killswitch on the <html> element
 if (Drupal.jsEnabled) {
   // Global Killswitch on the <html> element
-  $(document.documentElement).addClass('js');
+  jQuery(document.documentElement).addClass('js');
   // 'js enabled' cookie
   document.cookie = 'has_js=1; path=/';
   // Attach all behaviors.
-  $(document).ready(function() {
+  jQuery(document).ready(function() {
     Drupal.attachBehaviors(this);
   });
 }

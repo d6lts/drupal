@@ -4,16 +4,16 @@
  */
 Drupal.behaviors.autocomplete = function (context) {
   var acdb = [];
-  $('input.autocomplete:not(.autocomplete-processed)', context).each(function () {
+  jQuery('input.autocomplete:not(.autocomplete-processed)', context).each(function () {
     var uri = this.value;
     if (!acdb[uri]) {
       acdb[uri] = new Drupal.ACDB(uri);
     }
-    var input = $('#' + this.id.substr(0, this.id.length - 13))
+    var input = jQuery('#' + this.id.substr(0, this.id.length - 13))
       .attr('autocomplete', 'OFF')[0];
-    $(input.form).submit(Drupal.autocompleteSubmit);
+    jQuery(input.form).submit(Drupal.autocompleteSubmit);
     new Drupal.jsAC(input, acdb[uri]);
-    $(this).addClass('autocomplete-processed');
+    jQuery(this).addClass('autocomplete-processed');
   });
 };
 
@@ -22,7 +22,7 @@ Drupal.behaviors.autocomplete = function (context) {
  * and closes the suggestions popup when doing so.
  */
 Drupal.autocompleteSubmit = function () {
-  return $('#autocomplete').each(function () {
+  return jQuery('#autocomplete').each(function () {
     this.owner.hidePopup();
   }).size() == 0;
 };
@@ -35,7 +35,7 @@ Drupal.jsAC = function (input, db) {
   this.input = input;
   this.db = db;
 
-  $(this.input)
+  jQuery(this.input)
     .keydown(function (event) { return ac.onkeydown(this, event); })
     .keyup(function (event) { ac.onkeyup(this, event); })
     .blur(function () { ac.hidePopup(); ac.db.cancel(); });
@@ -113,7 +113,7 @@ Drupal.jsAC.prototype.selectDown = function () {
     this.highlight(this.selected.nextSibling);
   }
   else {
-    var lis = $('li', this.popup);
+    var lis = jQuery('li', this.popup);
     if (lis.size() > 0) {
       this.highlight(lis.get(0));
     }
@@ -134,9 +134,9 @@ Drupal.jsAC.prototype.selectUp = function () {
  */
 Drupal.jsAC.prototype.highlight = function (node) {
   if (this.selected) {
-    $(this.selected).removeClass('selected');
+    jQuery(this.selected).removeClass('selected');
   }
-  $(node).addClass('selected');
+  jQuery(node).addClass('selected');
   this.selected = node;
 };
 
@@ -144,7 +144,7 @@ Drupal.jsAC.prototype.highlight = function (node) {
  * Unhighlights a suggestion
  */
 Drupal.jsAC.prototype.unhighlight = function (node) {
-  $(node).removeClass('selected');
+  jQuery(node).removeClass('selected');
   this.selected = false;
 };
 
@@ -160,7 +160,7 @@ Drupal.jsAC.prototype.hidePopup = function (keycode) {
   var popup = this.popup;
   if (popup) {
     this.popup = null;
-    $(popup).fadeOut('fast', function() { $(popup).remove(); });
+    jQuery(popup).fadeOut('fast', function() { jQuery(popup).remove(); });
   }
   this.selected = false;
 };
@@ -171,18 +171,18 @@ Drupal.jsAC.prototype.hidePopup = function (keycode) {
 Drupal.jsAC.prototype.populatePopup = function () {
   // Show popup
   if (this.popup) {
-    $(this.popup).remove();
+    jQuery(this.popup).remove();
   }
   this.selected = false;
   this.popup = document.createElement('div');
   this.popup.id = 'autocomplete';
   this.popup.owner = this;
-  $(this.popup).css({
+  jQuery(this.popup).css({
     marginTop: this.input.offsetHeight +'px',
     width: (this.input.offsetWidth - 4) +'px',
     display: 'none'
   });
-  $(this.input).before(this.popup);
+  jQuery(this.input).before(this.popup);
 
   // Do search
   this.db.owner = this;
@@ -203,22 +203,22 @@ Drupal.jsAC.prototype.found = function (matches) {
   var ac = this;
   for (key in matches) {
     var li = document.createElement('li');
-    $(li)
+    jQuery(li)
       .html('<div>'+ matches[key] +'</div>')
       .mousedown(function () { ac.select(this); })
       .mouseover(function () { ac.highlight(this); })
       .mouseout(function () { ac.unhighlight(this); });
     li.autocompleteValue = key;
-    $(ul).append(li);
+    jQuery(ul).append(li);
   }
 
   // Show popup with matches, if any
   if (this.popup) {
     if (ul.childNodes.length > 0) {
-      $(this.popup).empty().append(ul).show();
+      jQuery(this.popup).empty().append(ul).show();
     }
     else {
-      $(this.popup).css({visibility: 'hidden'});
+      jQuery(this.popup).css({visibility: 'hidden'});
       this.hidePopup();
     }
   }
@@ -227,12 +227,12 @@ Drupal.jsAC.prototype.found = function (matches) {
 Drupal.jsAC.prototype.setStatus = function (status) {
   switch (status) {
     case 'begin':
-      $(this.input).addClass('throbbing');
+      jQuery(this.input).addClass('throbbing');
       break;
     case 'cancel':
     case 'error':
     case 'found':
-      $(this.input).removeClass('throbbing');
+      jQuery(this.input).removeClass('throbbing');
       break;
   }
 };
@@ -276,7 +276,7 @@ Drupal.ACDB.prototype.search = function (searchString) {
     db.owner.setStatus('begin');
 
     // Ajax GET request for autocompletion
-    $.ajax({
+    jQuery.ajax({
       type: "GET",
       url: db.uri +'/'+ Drupal.encodeURIComponent(searchString),
       dataType: 'json',
