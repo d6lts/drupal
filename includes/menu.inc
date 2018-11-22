@@ -385,7 +385,8 @@ function _menu_load_objects(&$item, &$map) {
           // 'load arguments' in the hook_menu() entry, but they need
           // some processing. In this case the $function is the key to the
           // load_function array, and the value is the list of arguments.
-          list($function, $args) = each($function);
+          $args = current($function);
+          $function = key($function);
           $load_functions[$index] = $function;
 
           // Some arguments are placeholders for dynamic items to process.
@@ -1560,7 +1561,9 @@ function menu_set_active_trail($new_trail = NULL) {
     }
 
     $tree = menu_tree_page_data(menu_get_active_menu_name());
-    list($key, $curr) = each($tree);
+
+    $curr = current($tree);
+    next($tree);
 
     while ($curr) {
       // Terminate the loop when we find the current path in the active trail.
@@ -1574,7 +1577,8 @@ function menu_set_active_trail($new_trail = NULL) {
           $trail[] = $curr['link'];
           $tree = $curr['below'] ? $curr['below'] : array();
         }
-        list($key, $curr) = each($tree);
+        $curr = current($tree);
+        next($tree);
       }
     }
     // Make sure the current page is in the trail (needed for the page title),
