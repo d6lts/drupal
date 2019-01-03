@@ -5,9 +5,3 @@ core = 6.x
 engine = phptemplate
 stylesheets[all][] = style.css
 stylesheets[print][] = print.css
-
-; Information added by Drupal 6 LTS vendors on 2019-01-02
-version = "6.47"
-core = "6.x"
-project = "drupal"
-datestamp = "1546491205"
