@@ -65,8 +65,11 @@ function update_sql($sql) {
   return array('success' => $result !== FALSE, 'query' => check_plain($sql));
 }
 
+/**
+* MySQL 8 reserved keywords list
+* https://dev.mysql.com/doc/refman/8.0/en/keywords.html
+*/
 global $db_mysql8_reserved_keywords;
- 
 $db_mysql8_reserved_keywords = array(
   'accessible',
   'add',
@@ -356,8 +359,6 @@ function db_prefix_tables($sql) {
     }, $sql);
   }
 
-  //die($sql);
-
   if (is_array($db_prefix)) {
     if (array_key_exists('default', $db_prefix)) {
       $tmp = $db_prefix;
@@ -366,21 +367,17 @@ function db_prefix_tables($sql) {
       foreach ($tmp as $key => $val) {
         $sql = strtr($sql, array('{'. $key .'}' => $val . $key));
       }
-
       return strtr($sql, array('{' => $db_prefix['default'], '}' => ''));
     }
     else {
       foreach ($db_prefix as $key => $val) {
         $sql = strtr($sql, array('{'. $key .'}' => $val . $key));
       }
-
       return strtr($sql, array('{' => '', '}' => ''));
     }
   }
   else {
-    $sql = strtr($sql, array('{' => $db_prefix, '}' => ''));
-
-    return $sql;
+    return strtr($sql, array('{' => $db_prefix, '}' => ''));
   }
 }
 
