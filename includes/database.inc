@@ -337,6 +337,33 @@ $db_mysql8_reserved_keywords = array(
 );
 
 /**
+* Checks if we are under certain database driver and database version.
+*
+* For example to check if we are under MySQL 8.0 or higher use
+* db_is_version('mysql', '8.0.0')
+* 
+* @param $driver
+*   Database driver name from $db_url setting. For example 'mysql' (which covers both 'mysql:' and 'mysqli:' drivers.
+* @param $version
+*   Database version returned by db_version() function call.
+* @param $operator
+*   Operator to compare version. '>=' by default.
+* @return
+*   true if we are under MySQL 8.0 or higher
+*/
+function db_is_version($driver, $version, $operator = '>=') {
+  global $db_url;
+
+  if(substr($db_url, 0, strlen($driver) ) === $driver) {
+    if(version_compare(db_version(), $version, $operator)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
  * Append a database prefix to all tables in a query.
  *
  * Queries sent to Drupal should wrap all table names in curly brackets. This
@@ -353,7 +380,7 @@ function db_prefix_tables($sql) {
   global $db_prefix, $db_mysql8_reserved_keywords;
 
   //need to escape reserved keywords for MySQL 8
-  if(version_compare(db_version(), '8.0.0', '>=')){
+  if(db_is_version('mysql', '8.0.0')) {
     $sql = array_reduce($db_mysql8_reserved_keywords, function ($original_sql, $keyword) {
       return str_replace('{' . $keyword . '}', '`{' . $keyword . '}`', $original_sql);
     }, $sql);
