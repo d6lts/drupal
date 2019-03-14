@@ -3585,6 +3585,15 @@ function drupal_write_record($table, &$object, $update = array()) {
 
     // Build arrays for the fields, placeholders, and values in our query.
     if (isset($object->$field)) {
+      //need to escape reserved keywords for MySQL 8
+      if(db_is_version('mysql', '8.0.0')) { 
+        global $db_mysql8_reserved_keywords;
+
+        if(in_array($field, $db_mysql8_reserved_keywords)) {
+          $field = '`' . $field . '`'; 
+        }
+      }
+
       $fields[] = $field;
       $placeholders[] = db_type_placeholder($info['type']);
 
