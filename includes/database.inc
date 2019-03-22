@@ -341,7 +341,7 @@ $db_mysql8_reserved_keywords = array(
 *
 * For example to check if we are under MySQL 8.0 or higher use
 * db_is_version('mysql', '8.0.0')
-* 
+*
 * @param $driver
 *   Database driver name from $db_url setting. For example 'mysql' (which covers both 'mysql:' and 'mysqli:' drivers.
 * @param $version
@@ -379,6 +379,27 @@ function db_is_version($driver, $version, $operator = '>=') {
 function db_prefix_tables($sql) {
   global $db_prefix, $db_mysql8_reserved_keywords;
 
+  //add prefixes
+  if (is_array($db_prefix)) {
+    if (array_key_exists('default', $db_prefix)) {
+      $tmp = $db_prefix;
+      unset($tmp['default']);
+
+      foreach ($tmp as $key => $val) {
+        $sql = strtr($sql, array('{' . $key . '}' => '{' . $val . $key . '}'));
+      }
+      $sql = strtr($sql, array('{' => '{' . $db_prefix['default']));
+    }
+    else {
+      foreach ($db_prefix as $key => $val) {
+        $sql = strtr($sql, array('{' . $key . '}' => '{' . $val . $key . '}'));
+      }
+    }
+  }
+  else {
+    $sql = strtr($sql, array('{' => '{' . $db_prefix));
+  }
+
   //need to escape reserved keywords for MySQL 8
   if(db_is_version('mysql', '8.0.0')) {
     $sql = array_reduce($db_mysql8_reserved_keywords, function ($original_sql, $keyword) {
@@ -386,26 +407,10 @@ function db_prefix_tables($sql) {
     }, $sql);
   }
 
-  if (is_array($db_prefix)) {
-    if (array_key_exists('default', $db_prefix)) {
-      $tmp = $db_prefix;
-      unset($tmp['default']);
+  //remove curly braces
+  $sql = strtr($sql, array('{' => '', '}' => ''));
 
-      foreach ($tmp as $key => $val) {
-        $sql = strtr($sql, array('{'. $key .'}' => $val . $key));
-      }
-      return strtr($sql, array('{' => $db_prefix['default'], '}' => ''));
-    }
-    else {
-      foreach ($db_prefix as $key => $val) {
-        $sql = strtr($sql, array('{'. $key .'}' => $val . $key));
-      }
-      return strtr($sql, array('{' => '', '}' => ''));
-    }
-  }
-  else {
-    return strtr($sql, array('{' => $db_prefix, '}' => ''));
-  }
+  return $sql;
 }
 
 /**
