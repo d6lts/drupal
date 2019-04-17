@@ -3,3 +3,9 @@ description = Enables site-wide keyword searching.
 package = Core - optional
 version = VERSION
 core = 6.x
+
+; Information added by Drupal 6 LTS vendors on 2019-04-17
+version = "6.50"
+core = "6.x"
+project = "drupal"
+datestamp = "1555524741"

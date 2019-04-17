@@ -5,3 +5,9 @@ regions[right] = Right sidebar
 version = VERSION
 core = 6.x
 base theme = chameleon
+
+; Information added by Drupal 6 LTS vendors on 2019-04-17
+version = "6.50"
+core = "6.x"
+project = "drupal"
+datestamp = "1555524741"
