@@ -2256,6 +2256,7 @@ function drupal_add_js($data = NULL, $type = 'module', $scope = 'header', $defer
       $javascript['header'] = array(
         'core' => array(
           'misc/jquery.js' => array('cache' => TRUE, 'defer' => FALSE, 'preprocess' => TRUE),
+          'misc/jquery-extend-3.4.0.js' => array('cache' => TRUE, 'defer' => FALSE, 'preprocess' => TRUE),
           'misc/drupal.js' => array('cache' => TRUE, 'defer' => FALSE, 'preprocess' => TRUE),
         ),
         'module' => array(),
