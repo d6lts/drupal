@@ -1,3 +1,17 @@
+Drupal 6.50, 2019-04-17 - Long term support
+---------------------------------------
+- Fixed security issues (cross site scripting), backport. See SA-CORE-2019-006.
+
+Drupal 6.49, 2019-01-16 - Long term support
+---------------------------------------
+- Fixes issues with some Drush commands when using the PHAR file. See
+  https://www.drupal.org/project/drupal/issues/3026386
+
+Drupal 6.48, 2019-01-16 - Long term support
+---------------------------------------
+- Fixed security issues (arbitrary PHP code execution), backport. See
+  SA-CORE-2019-002.
+
 Drupal 6.47, 2019-01-02 - Long term support
 ---------------------------------------
 - Improved support for PHP 7.2.
