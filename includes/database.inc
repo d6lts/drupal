@@ -403,10 +403,9 @@ function db_prefix_tables($sql) {
 
   // Need to escape reserved keywords for MySQL 8.
   if (db_version_compare('mysql', '8.0.0')) {
-    // @todo Need to make sure this works in PHP 5.2
-    $sql = array_reduce($db_mysql8_reserved_keywords, function ($original_sql, $keyword) {
-      return str_replace('{' . $keyword . '}', '`{' . $keyword . '}`', $original_sql);
-    }, $sql);
+    foreach ($db_mysql8_reserved_keywords as $keyword) {
+      $sql = str_replace('{' . $keyword . '}', '`{' . $keyword . '}`', $sql);
+    }
   }
 
   // Remove curly braces.
