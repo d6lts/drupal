@@ -3598,12 +3598,12 @@ function drupal_write_record($table, &$object, $update = array()) {
     }
   }
 
-  //need to escape reserved keywords for MySQL 8
-  if(db_is_version('mysql', '8.0.0')) {
+  // Need to escape reserved keywords for MySQL 8.
+  if (db_version_compare('mysql', '8.0.0')) {
     global $db_mysql8_reserved_keywords;
 
-    foreach($fields as $key => $field) {
-      if(in_array($field, $db_mysql8_reserved_keywords)) {
+    foreach ($fields as $key => $field) {
+      if (in_array($field, $db_mysql8_reserved_keywords)) {
         $fields[$key] = '`' . $field . '`';
       }
     }

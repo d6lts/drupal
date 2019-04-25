@@ -66,9 +66,10 @@ function update_sql($sql) {
 }
 
 /**
-* MySQL 8 reserved keywords list
-* https://dev.mysql.com/doc/refman/8.0/en/keywords.html
-*/
+ * MySQL 8 reserved keywords list.
+ *
+ * @see https://dev.mysql.com/doc/refman/8.0/en/keywords.html
+ */
 global $db_mysql8_reserved_keywords;
 $db_mysql8_reserved_keywords = array(
   'accessible',
@@ -337,30 +338,30 @@ $db_mysql8_reserved_keywords = array(
 );
 
 /**
-* Checks if we are under certain database driver and database version.
-*
-* For example to check if we are under MySQL 8.0 or higher use
-* db_is_version('mysql', '8.0.0')
-*
-* @param $driver
-*   Database driver name from $db_url setting. For example 'mysql' (which covers both 'mysql:' and 'mysqli:' drivers.
-* @param $version
-*   Database version returned by db_version() function call.
-* @param $operator
-*   Operator to compare version. '>=' by default.
-* @return
-*   true if we are under MySQL 8.0 or higher
+ * Checks if we are under certain database driver and database version.
+ *
+ * For example, to check if we are under MySQL 8.0 or higher use
+ * db_version_compare('mysql', '8.0.0').
+ *
+ * @param string $driver
+ *   Database driver name from $db_url setting. For example 'mysql' (which covers both 'mysql:' and 'mysqli:' drivers.
+ * @param string $version
+ *   Database version returned by db_version() function call.
+ * @param string $operator
+ *   Operator to compare version. '>=' by default.
+ * @return bool
+ *   TRUE if version check passes; otherwise FALSE.
 */
-function db_is_version($driver, $version, $operator = '>=') {
+function db_version_compare($driver, $version, $operator = '>=') {
   global $db_url;
 
-  if(substr($db_url, 0, strlen($driver) ) === $driver) {
-    if(version_compare(db_version(), $version, $operator)) {
-      return true;
+  if (substr($db_url, 0, strlen($driver)) === $driver) {
+    if (version_compare(db_version(), $version, $operator)) {
+      return TRUE;
     }
   }
 
-  return false;
+  return FALSE;
 }
 
 /**
@@ -379,7 +380,7 @@ function db_is_version($driver, $version, $operator = '>=') {
 function db_prefix_tables($sql) {
   global $db_prefix, $db_mysql8_reserved_keywords;
 
-  //add prefixes
+  // Add prefixes.
   if (is_array($db_prefix)) {
     if (array_key_exists('default', $db_prefix)) {
       $tmp = $db_prefix;
@@ -400,14 +401,15 @@ function db_prefix_tables($sql) {
     $sql = strtr($sql, array('{' => '{' . $db_prefix));
   }
 
-  //need to escape reserved keywords for MySQL 8
-  if(db_is_version('mysql', '8.0.0')) {
+  // Need to escape reserved keywords for MySQL 8.
+  if (db_version_compare('mysql', '8.0.0')) {
+    // @todo Need to make sure this works in PHP 5.2
     $sql = array_reduce($db_mysql8_reserved_keywords, function ($original_sql, $keyword) {
       return str_replace('{' . $keyword . '}', '`{' . $keyword . '}`', $original_sql);
     }, $sql);
   }
 
-  //remove curly braces
+  // Remove curly braces.
   $sql = strtr($sql, array('{' => '', '}' => ''));
 
   return $sql;
