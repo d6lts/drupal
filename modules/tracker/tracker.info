@@ -4,9 +4,3 @@ dependencies[] = comment
 package = Core - optional
 version = VERSION
 core = 6.x
-
-; Information added by Drupal 6 LTS vendors on 2019-04-29
-version = "6.51"
-core = "6.x"
-project = "drupal"
-datestamp = "1556564673"
