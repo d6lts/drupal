@@ -353,9 +353,9 @@ $db_mysql8_reserved_keywords = array(
  *   TRUE if version check passes; otherwise FALSE.
 */
 function db_version_compare($driver, $version, $operator = '>=') {
-  global $db_url;
+  global $db_type;
 
-  if (substr($db_url, 0, strlen($driver)) === $driver) {
+  if (substr($db_type, 0, strlen($driver)) === $driver) {
     if (version_compare(db_version(), $version, $operator)) {
       return TRUE;
     }
