@@ -353,9 +353,16 @@ $db_mysql8_reserved_keywords = array(
  *   TRUE if version check passes; otherwise FALSE.
 */
 function db_version_compare($driver, $version, $operator = '>=') {
-  global $db_url;
+  global $db_url, $db_active_name;
 
-  if (substr($db_url, 0, strlen($driver)) === $driver) {
+  if (is_array($db_url)) {
+    $db_active_url = array_key_exists($db_active_name, $db_url) ? $db_url[$db_active_name] : $db_url['default'];
+  }
+  else {
+    $db_active_url = $db_url;
+  }
+
+  if (substr($db_active_url, 0, strlen($driver)) === $driver) {
     if (version_compare(db_version(), $version, $operator)) {
       return TRUE;
     }
@@ -415,6 +422,12 @@ function db_prefix_tables($sql) {
 }
 
 /**
+ * Active database connection name.
+ */
+global $db_active_name;
+$db_active_name = FALSE;
+
+/**
  * Activate a database for future queries.
  *
  * If it is necessary to use external databases in a project, this function can
@@ -435,7 +448,8 @@ function db_prefix_tables($sql) {
  */
 function db_set_active($name = 'default') {
   global $db_url, $db_type, $active_db;
-  static $db_conns, $active_name = FALSE;
+  global $db_active_name;
+  static $db_conns;
 
   if (empty($db_url)) {
     include_once 'includes/install.inc';
@@ -464,9 +478,9 @@ function db_set_active($name = 'default') {
     $db_conns[$name] = db_connect($connect_url);
   }
 
-  $previous_name = $active_name;
+  $previous_name = $db_active_name;
   // Set the active connection.
-  $active_name = $name;
+  $db_active_name = $name;
   $active_db = $db_conns[$name];
 
   return $previous_name;
