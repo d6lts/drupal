@@ -1,3 +1,8 @@
+Drupal 6.52, 2019-05-08 - Long term support
+---------------------------------------
+- Fixed security issues (cross site scripting), backport. See SA-CORE-2019-007.
+- Fixed db_version_compare() does not handle if $db_url is an array
+
 Drupal 6.51, 2019-04-29 - Long term support
 ---------------------------------------
 - Add support for MySQL 8
