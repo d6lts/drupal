@@ -1557,7 +1557,7 @@ function url($path = NULL, $options = array()) {
     $path = '';
   }
   elseif (!empty($path) && !$options['alias']) {
-    $path = drupal_get_path_alias($path, isset($options['language']) ? $options['language']->language : '');
+    $path = drupal_get_path_alias($path, (isset($options['language']) && isset($options['language']->language)) ? $options['language']->language : '');
     // Strip leading slashes from internal paths to prevent them becoming external
     // URLs without protocol. /example.com should not be turned into
     // //example.com.
