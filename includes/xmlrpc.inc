@@ -213,7 +213,7 @@ function xmlrpc_message_parse(&$xmlrpc_message) {
 /**
  * Store a copy of the $xmlrpc_message object temporarily.
  *
- * @param $value
+ * @param $value stdClass
  *   Object
  * @return
  *   The most recently stored $xmlrpc_message

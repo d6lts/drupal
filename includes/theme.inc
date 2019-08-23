@@ -223,7 +223,7 @@ function _theme_set_registry($registry) {
  * @param $base_theme
  *   An array of loaded $theme objects representing the ancestor themes in
  *   oldest first order.
- * @param theme_engine
+ * @param $theme_engine
  *   The name of the theme engine.
  */
 function _theme_load_registry($theme, $base_theme = NULL, $theme_engine = NULL) {
@@ -422,7 +422,7 @@ function _theme_process_registry(&$cache, $name, $type, $theme, $path) {
  * @param $base_theme
  *   An array of loaded $theme objects representing the ancestor themes in
  *   oldest first order.
- * @param theme_engine
+ * @param $theme_engine
  *   The name of the theme engine.
  */
 function _theme_build_registry($theme, $base_theme, $theme_engine) {
@@ -1296,7 +1296,8 @@ function theme_image($path, $alt = '', $title = '', $attributes = NULL, $getsize
  *
  * @param $breadcrumb
  *   An array containing the breadcrumb links.
- * @return a string containing the breadcrumb output.
+ * @return
+ *   a string containing the breadcrumb output.
  */
 function theme_breadcrumb($breadcrumb) {
   if (!empty($breadcrumb)) {
@@ -1307,7 +1308,8 @@ function theme_breadcrumb($breadcrumb) {
 /**
  * Return a themed help message.
  *
- * @return a string containing the helptext for the current page.
+ * @return
+ *   a string containing the helptext for the current page.
  */
 function theme_help() {
   if ($help = menu_get_active_help()) {

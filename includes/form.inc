@@ -2316,7 +2316,7 @@ function theme_file($element) {
 /**
  * Return a themed form element.
  *
- * @param element
+ * @param $element
  *   An associative array containing the properties of the element.
  *   Properties used: title, description, id, required
  * @param $value

@@ -153,8 +153,10 @@ function openid_login_validate($form, &$form_state) {
  *  - Create the authentication request.
  *  - Perform the appropriate redirect.
  *
- * @param $claimed_id The OpenID to authenticate
- * @param $return_to The endpoint to return to from the OpenID Provider
+ * @param $claimed_id
+ *   The OpenID to authenticate
+ * @param $return_to
+ *   The endpoint to return to from the OpenID Provider
  */
 function openid_begin($claimed_id, $return_to = '', $form_values = array()) {
   module_load_include('inc', 'openid');
@@ -213,9 +215,11 @@ function openid_begin($claimed_id, $return_to = '', $form_values = array()) {
  * Completes OpenID authentication by validating returned data from the OpenID
  * Provider.
  *
- * @param $response Array of returned values from the OpenID Provider.
+ * @param $response
+ *   Array of returned values from the OpenID Provider.
  *
- * @return $response Response values for further processing with
+ * @return $response
+ *   Response values for further processing with
  *   $response['status'] set to one of 'success', 'failed' or 'cancel'.
  */
 function openid_complete($response = array()) {
@@ -310,9 +314,11 @@ function openid_complete($response = array()) {
 /**
  * Perform discovery on a claimed ID to determine the OpenID provider endpoint.
  *
- * @param $claimed_id The OpenID URL to perform discovery on.
+ * @param $claimed_id
+ *   The OpenID URL to perform discovery on.
  *
- * @return Array of services discovered (including OpenID version, endpoint
+ * @return
+ *   Array of services discovered (including OpenID version, endpoint
  * URI, etc).
  */
 function openid_discovery($claimed_id) {
@@ -379,9 +385,11 @@ function openid_discovery($claimed_id) {
 /**
  * Attempt to create a shared secret with the OpenID Provider.
  *
- * @param $op_endpoint URL of the OpenID Provider endpoint.
+ * @param $op_endpoint
+ *   URL of the OpenID Provider endpoint.
  *
- * @return $assoc_handle The association handle.
+ * @return
+ *   $assoc_handle The association handle.
  */
 function openid_association($op_endpoint) {
   module_load_include('inc', 'openid');
@@ -430,7 +438,8 @@ function openid_association($op_endpoint) {
 /**
  * Authenticate a user or attempt registration.
  *
- * @param $response Response values from the OpenID Provider.
+ * @param $response
+ *   Response values from the OpenID Provider.
  */
 function openid_authentication($response) {
   module_load_include('inc', 'openid');

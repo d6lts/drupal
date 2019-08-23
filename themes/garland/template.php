@@ -28,7 +28,8 @@ function phptemplate_body_class($left, $right) {
  *
  * @param $breadcrumb
  *   An array containing the breadcrumb links.
- * @return a string containing the breadcrumb output.
+ * @return
+ *   a string containing the breadcrumb output.
  */
 function phptemplate_breadcrumb($breadcrumb) {
   if (!empty($breadcrumb)) {

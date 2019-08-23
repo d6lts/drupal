@@ -40,7 +40,8 @@ function db_status_report($phase) {
 /**
  * Returns the version of the database server currently in use.
  *
- * @return Database server version
+ * @return
+ *   Database server version
  */
 function db_version() {
   global $active_db;

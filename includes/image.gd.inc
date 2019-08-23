@@ -177,7 +177,7 @@ function image_gd_crop($source, $destination, $x, $y, $width, $height) {
  *   A string file path where the iamge should be saved.
  * @param $extension
  *   A string containing one of the following extensions: gif, jpg, jpeg, png.
- * @return
+ * @return resource|false
  *   An image resource, or FALSE on error.
  */
 function image_gd_open($file, $extension) {

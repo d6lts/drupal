@@ -294,7 +294,7 @@ function menu_set_item($path, $router_item) {
  *   node/% item and return that.
  * @param $router_item
  *   Internal use only.
- * @return
+ * @return array|bool
  *   The router item, an associate array corresponding to one row in the
  *   menu_router table. The value of key map holds the loaded objects. The
  *   value of key access is TRUE if the current user can access this page.
@@ -432,7 +432,7 @@ function _menu_load_objects(&$item, &$map) {
  *   A menu router or menu link item
  * @param $map
  *   An array of path arguments (ex: array('node', '5'))
- * @return
+ * @return void
  *   $item['access'] becomes TRUE if the item is accessible, FALSE otherwise.
  */
 function _menu_check_access(&$item, $map) {
@@ -472,7 +472,7 @@ function _menu_check_access(&$item, $map) {
  * @param $link_translate
  *   TRUE if we are translating a menu link item; FALSE if we are
  *   translating a menu router item.
- * @return
+ * @return void
  *   No return value.
  *   $item['title'] is localized according to $item['title_callback'].
  *   If an item's callback is check_plain(), $item['options']['html'] becomes
@@ -550,7 +550,7 @@ function _menu_item_localize(&$item, $map, $link_translate = FALSE) {
  * @param $to_arg
  *   Execute $item['to_arg_functions'] or not. Use only if you want to render a
  *   path from the menu table, for example tabs.
- * @return
+ * @return array|bool
  *   Returns the map with objects loaded as defined in the
  *   $item['load_functions']. $item['access'] becomes TRUE if the item is
  *   accessible, FALSE otherwise. $item['href'] is set according to the map.
@@ -595,7 +595,7 @@ function _menu_translate(&$router_item, $map, $to_arg = FALSE) {
  * helper function. These functions take an argument and return an object.
  * See http://drupal.org/node/109153 for more information.
  *
- * @param map
+ * @param $map
  *   An array of path arguments (ex: array('node', '5'))
  * @param $to_arg_functions
  *   An array of helper function (ex: array(2 => 'menu_tail_to_arg'))

@@ -264,9 +264,9 @@ function drupal_get_install_files($module_list = array()) {
 /**
  * Verify a profile for installation.
  *
- * @param profile
+ * @param $profile
  *   Name of profile to verify.
- * @param locale
+ * @param $locale
  *   Name of locale used (if any).
  * @return
  *   The list of modules to install.
@@ -309,7 +309,7 @@ function drupal_verify_profile($profile, $locale) {
  * Calls the install function and updates the system table for a given list of
  * modules.
  *
- * @param module_list
+ * @param $module_list
  *   The modules to install.
  */
 function drupal_install_modules($module_list = array()) {
@@ -494,9 +494,9 @@ function drupal_verify_install_file($file, $mask = NULL, $type = 'file') {
 /**
  * Create a directory with specified permissions.
  *
- * @param file
+ * @param $file
  *  The name of the directory to create;
- * @param mask
+ * @param $mask
  *  The permissions of the directory to create.
  * @param $message
  *  (optional) Whether to output messages. Defaults to TRUE.
@@ -667,7 +667,7 @@ function st($string, $args = array()) {
 /**
  * Check a profile's requirements.
  *
- * @param profile
+ * @param $profile
  *   Name of profile to check.
  */
 function drupal_check_profile($profile) {

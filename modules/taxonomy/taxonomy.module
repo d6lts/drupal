@@ -1013,7 +1013,7 @@ function _taxonomy_term_children($tid) {
  * Provides a case-insensitive and trimmed mapping, to maximize the
  * likelihood of a successful match.
  *
- * @param name
+ * @param $name
  *   Name of the term to search for.
  *
  * @return
@@ -1306,7 +1306,8 @@ function taxonomy_node_update_index(&$node) {
  *   comma (,) means AND
  *   plus (+) means OR
  *
- * @return an associative array with an operator key (either 'and'
+ * @return
+ *   an associative array with an operator key (either 'and'
  *   or 'or') and a tid key containing an array of the term ids.
  */
 function taxonomy_terms_parse_string($str_tids) {

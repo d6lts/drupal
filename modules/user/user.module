@@ -1683,8 +1683,10 @@ function _user_edit_submit($uid, &$edit) {
 /**
  * Delete a user.
  *
- * @param $edit An array of submitted form values.
- * @param $uid The user ID of the user to delete.
+ * @param $edit
+ *   An array of submitted form values.
+ * @param $uid
+ *   The user ID of the user to delete.
  */
 function user_delete($edit, $uid) {
   $account = user_load(array('uid' => $uid));

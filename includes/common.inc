@@ -3499,10 +3499,11 @@ function _drupal_initialize_schema($module, &$schema) {
  *
  * @param $table
  *   The name of the table from which to retrieve fields.
- * @param
+ * @param $prefix
  *   An optional prefix to to all fields.
  *
- * @return An array of fields.
+ * @return
+ *   An array of fields.
  **/
 function drupal_schema_fields_sql($table, $prefix = NULL) {
   $schema = drupal_get_schema($table);

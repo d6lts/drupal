@@ -22,7 +22,8 @@ function forum_form_main($type, $edit = array()) {
 /**
  * Returns a form for adding a forum to the forum vocabulary
  *
- * @param $edit Associative array containing a forum term to be added or edited.
+ * @param $edit
+ *   Associative array containing a forum term to be added or edited.
  * @ingroup forms
  * @see forum_form_submit()
  */
@@ -99,7 +100,8 @@ function forum_form_submit($form, &$form_state) {
 /**
  * Returns a form for adding a container to the forum vocabulary
  *
- * @param $edit Associative array containing a container term to be added or edited.
+ * @param $edit
+ *   Associative array containing a container term to be added or edited.
  * @ingroup forms
  * @see forum_form_submit()
  */
@@ -156,7 +158,8 @@ function forum_form_container(&$form_state, $edit = array()) {
 /**
  * Returns a confirmation page for deleting a forum taxonomy term.
  *
- * @param $tid ID of the term to be deleted
+ * @param $tid
+ *   ID of the term to be deleted
  */
 function forum_confirm_delete(&$form_state, $tid) {
   $term = taxonomy_get_term($tid);
@@ -247,9 +250,12 @@ function forum_overview(&$form_state) {
 /**
  * Returns a select box for available parent terms
  *
- * @param $tid ID of the term which is being added or edited
- * @param $title Title to display the select box with
- * @param $child_type Whether the child is forum or container
+ * @param $tid
+ *   ID of the term which is being added or edited
+ * @param $title
+ *   Title to display the select box with
+ * @param $child_type
+ *   Whether the child is forum or container
  */
 function _forum_parent_select($tid, $title, $child_type) {
 

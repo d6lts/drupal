@@ -34,7 +34,8 @@ function db_status_report() {
 /**
  * Returns the version of the database server currently in use.
  *
- * @return Database server version
+ * @return
+ *   Database server version
  */
 function db_version() {
   return db_result(db_query("SHOW SERVER_VERSION"));
