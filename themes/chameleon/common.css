@@ -107,7 +107,7 @@ ul.links.inline {
   border: 1px solid #3a3;
   color: #3a3;
 }
-.error, form-item input.error {
+.error, .form-item input.error {
   border: 1px solid red;
   color: red;
 }
