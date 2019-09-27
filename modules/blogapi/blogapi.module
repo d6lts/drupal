@@ -593,7 +593,7 @@ function blogapi_mt_validate_terms($node) {
       }
       // Vocabularies that don't allow multiple terms may have at most one.
       if (!($vocabulary->multiple) && (isset($found_terms[$vocabulary->vid]) && count($found_terms[$vocabulary->vid]) > 1)) {
-        return blogapi_error(t('You may only choose one category from the @vocabulary_name vocabulary.'), array('@vocabulary_name' => $vocabulary->name));
+        return blogapi_error(t('You may only choose one category from the @vocabulary_name vocabulary.', array('@vocabulary_name' => $vocabulary->name)));
       }
     }
   }
