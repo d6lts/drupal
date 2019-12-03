@@ -1,3 +1,26 @@
+Drupal 6.52, 2019-05-08 - Long term support
+---------------------------------------
+- Fixed security issues (cross site scripting), backport. See SA-CORE-2019-007.
+- Fixed db_version_compare() does not handle if $db_url is an array
+
+Drupal 6.51, 2019-04-29 - Long term support
+---------------------------------------
+- Add support for MySQL 8
+
+Drupal 6.50, 2019-04-17 - Long term support
+---------------------------------------
+- Fixed security issues (cross site scripting), backport. See SA-CORE-2019-006.
+
+Drupal 6.49, 2019-01-16 - Long term support
+---------------------------------------
+- Fixes issues with some Drush commands when using the PHAR file. See
+  https://www.drupal.org/project/drupal/issues/3026386
+
+Drupal 6.48, 2019-01-16 - Long term support
+---------------------------------------
+- Fixed security issues (arbitrary PHP code execution), backport. See
+  SA-CORE-2019-002.
+
 Drupal 6.47, 2019-01-02 - Long term support
 ---------------------------------------
 - Improved support for PHP 7.2.
