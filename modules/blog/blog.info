@@ -3,3 +3,9 @@ description = Enables keeping easily and regularly updated user web pages or blo
 package = Core - optional
 version = VERSION
 core = 6.x
+
+; Information added by Drupal 6 LTS vendors on 2020-05-20
+version = "6.53"
+core = "6.x"
+project = "drupal"
+datestamp = "1589983358"
