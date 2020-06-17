@@ -634,6 +634,13 @@ function drupal_validate_form($form_id, $form, &$form_state) {
       // could invoke non-safe operations which opens the door for CSRF
       // vulnerabilities.
       $validated_forms[$form_id] = TRUE;
+      // Ignore all submitted values.
+      $form_state['post'] = array();
+      $form_state['input'] = array();
+      $form['#post'] = array();
+      $form['#input'] = array();
+      $_POST = array();
+      $_FILES = array();
       return;
     }
   }
@@ -943,7 +950,12 @@ function form_builder($form_id, $form, &$form_state) {
           form_set_error('form_token', t('Validation error, please try again. If this error persists, please contact the site administrator.'));
           // This value is checked in _form_builder_handle_input_element().
           $form_state['invalid_token'] = TRUE;
-          // Make sure file uploads do not get processed.
+          // Ignore all submitted values.
+          $form_state['post'] = array();
+          $form_state['input'] = array();
+          $form['#post'] = array();
+          $form['#input'] = array();
+          $_POST = array();
           $_FILES = array();
         }
       }
