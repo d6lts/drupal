@@ -385,40 +385,45 @@ function db_version_compare($driver, $version, $operator = '>=') {
  *   The properly-prefixed string.
  */
 function db_prefix_tables($sql) {
-  global $db_prefix, $db_mysql8_reserved_keywords;
+  global $db_prefix;
 
-  // Add prefixes.
+  // Identify table name quote char (depending on database type and version).
+  $table_quote_char = db_get_table_name_quote_char();
+
+  // Identify prefix settings to apply.
   if (is_array($db_prefix)) {
+    $tmp = $db_prefix;
     if (array_key_exists('default', $db_prefix)) {
-      $tmp = $db_prefix;
       unset($tmp['default']);
-
-      foreach ($tmp as $key => $val) {
-        $sql = strtr($sql, array('{' . $key . '}' => '{' . $val . $key . '}'));
-      }
-      $sql = strtr($sql, array('{' => '{' . $db_prefix['default']));
+      $default_replacement = $db_prefix['default'];
     }
     else {
-      foreach ($db_prefix as $key => $val) {
-        $sql = strtr($sql, array('{' . $key . '}' => '{' . $val . $key . '}'));
-      }
+      $default_replacement = '';
     }
   }
   else {
-    $sql = strtr($sql, array('{' => '{' . $db_prefix));
+    $tmp = array();
+    $default_replacement = $db_prefix;
   }
 
-  // Need to escape reserved keywords for MySQL 8.
+  // Add prefixes.
+  foreach ($tmp as $key => $val) {
+    $sql = strtr($sql, array('{' . $key . '}' => $table_quote_char . $val . $key . $table_quote_char));
+  }
+  return strtr($sql, array('{' => $table_quote_char . $default_replacement, '}' => $table_quote_char));
+}
+
+/**
+ * Identify table name quote character (depending on database type and version).
+ *
+ * @return
+ *    A string containing a backtick for MySQL 8+ ; no character (empty string) otherwise.
+ */
+function db_get_table_name_quote_char() {
   if (db_version_compare('mysql', '8.0.0')) {
-    foreach ($db_mysql8_reserved_keywords as $keyword) {
-      $sql = str_replace('{' . $keyword . '}', '`{' . $keyword . '}`', $sql);
-    }
+    return '`';
   }
-
-  // Remove curly braces.
-  $sql = strtr($sql, array('{' => '', '}' => ''));
-
-  return $sql;
+  return '';
 }
 
 /**
