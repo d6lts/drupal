@@ -1216,7 +1216,7 @@ function theme_links($links, $attributes = array('class' => 'links')) {
   global $language;
   $output = '';
 
-  if (!empty($links)) {
+  if (is_array($links) && !empty($links)) {
     $output = '<ul'. drupal_attributes($attributes) .'>';
 
     $num_links = count($links);
