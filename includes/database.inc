@@ -385,10 +385,7 @@ function db_version_compare($driver, $version, $operator = '>=') {
  *   The properly-prefixed string.
  */
 function db_prefix_tables($sql) {
-  global $db_prefix;
-
-  // Identify table name quote char (depending on database type and version).
-  $table_quote_char = db_get_table_name_quote_char();
+  global $db_prefix, $db_mysql8_reserved_keywords;
 
   // Identify prefix settings to apply.
   if (is_array($db_prefix)) {
@@ -406,24 +403,22 @@ function db_prefix_tables($sql) {
     $default_replacement = $db_prefix;
   }
 
-  // Add prefixes.
+  // Add prefixes and transform curly braces into pipes in order to mark already done operations
+  // while preserving table name encapsulation for the next step.
   foreach ($db_prefix_local as $table_name => $prefix) {
-    $sql = strtr($sql, array('{' . $table_name . '}' => $table_quote_char . $prefix . $table_name . $table_quote_char));
+    $sql = strtr($sql, array('{' . $table_name . '}' => '|' . $prefix . $table_name . '|'));
   }
-  return strtr($sql, array('{' => $table_quote_char . $default_replacement, '}' => $table_quote_char));
-}
+  $sql = strtr($sql, array('{' => '|' . $default_replacement, '}' => '|'));
 
-/**
- * Identify table name quote character (depending on database type and version).
- *
- * @return
- *    A string containing a backtick for MySQL 8+ ; no character (empty string) otherwise.
- */
-function db_get_table_name_quote_char() {
+  // For MySQL 8, escape table names corersponding to reserved keywords.
   if (db_version_compare('mysql', '8.0.0')) {
-    return '`';
+    foreach ($db_mysql8_reserved_keywords as $keyword) {
+      $sql = str_replace('|' . $keyword . '|', '`' . $keyword . '`', $sql);
+    }
   }
-  return '';
+
+  // Remove pipes.
+  return str_replace('|', '', $sql);
 }
 
 /**
