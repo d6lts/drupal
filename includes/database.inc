@@ -392,9 +392,9 @@ function db_prefix_tables($sql) {
 
   // Identify prefix settings to apply.
   if (is_array($db_prefix)) {
-    $tmp = $db_prefix;
+    $db_prefix_local = $db_prefix;
     if (array_key_exists('default', $db_prefix)) {
-      unset($tmp['default']);
+      unset($db_prefix_local['default']);
       $default_replacement = $db_prefix['default'];
     }
     else {
@@ -402,13 +402,13 @@ function db_prefix_tables($sql) {
     }
   }
   else {
-    $tmp = array();
+    $db_prefix_local = array();
     $default_replacement = $db_prefix;
   }
 
   // Add prefixes.
-  foreach ($tmp as $key => $val) {
-    $sql = strtr($sql, array('{' . $key . '}' => $table_quote_char . $val . $key . $table_quote_char));
+  foreach ($db_prefix_local as $table_name => $prefix) {
+    $sql = strtr($sql, array('{' . $table_name . '}' => $table_quote_char . $prefix . $table_name . $table_quote_char));
   }
   return strtr($sql, array('{' => $table_quote_char . $default_replacement, '}' => $table_quote_char));
 }
