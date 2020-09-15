@@ -373,6 +373,23 @@ Drupal.getSelection = function (element) {
 };
 
 /**
+ * Sanitizes a URL for use with jQuery.ajax().
+ *
+ * @param url
+ *   The URL string to be sanitized.
+ *
+ * @return
+ *   The sanitized URL.
+ */
+Drupal.sanitizeAjaxUrl = function (url) {
+  var regex = /\=\?(&|$)/;
+  while (url.match(regex)) {
+    url = url.replace(regex, '');
+  }
+  return url;
+}
+
+/**
  * Build an error message from ahah response.
  */
 Drupal.ahahError = function(xmlhttp, uri) {
