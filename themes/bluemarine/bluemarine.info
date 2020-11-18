@@ -3,9 +3,3 @@ description = Table-based multi-column theme with a marine and ash color scheme.
 version = VERSION
 core = 6.x
 engine = phptemplate
-
-; Information added by Drupal 6 LTS vendors on 2020-11-18
-version = "6.56"
-core = "6.x"
-project = "drupal"
-datestamp = "1605719513"
