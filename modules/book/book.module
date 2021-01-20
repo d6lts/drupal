@@ -860,7 +860,7 @@ function _book_toc_recurse($tree, $indent, &$toc, $exclude, $depth_limit) {
  * @return
  *   An array of mlid, title pairs for use as options for selecting a book page.
  */
-function book_toc($bid, $exclude = array(), $depth_limit) {
+function book_toc($bid, $exclude, $depth_limit) {
 
   $tree = menu_tree_all_data(book_menu_name($bid));
   $toc = array();
