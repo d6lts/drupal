@@ -2746,6 +2746,17 @@ function system_update_6056() {
 }
 
 /**
+ * Overwrite the .htaccess in the files and temp directory for PHP 7.
+ */
+function system_update_6057() {
+  include_once './includes/file.inc';
+  $ret = array();
+  file_create_htaccess(file_directory_path(), NULL, TRUE);
+  file_create_htaccess(file_directory_temp(), NULL, TRUE);
+  return $ret;
+}
+
+/**
  * @} End of "defgroup updates-6.x-extra".
  * The next series of updates should start at 7000.
  */
