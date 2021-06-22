@@ -97,6 +97,7 @@ function block_admin_display_form(&$form_state, $blocks, $theme = NULL) {
  * Process main blocks administration form submission.
  */
 function block_admin_display_form_submit($form, &$form_state) {
+  unset($form_state['values']['op'], $form_state['values']['submit'], $form_state['values']['form_token'], $form_state['values']['form_id'], $form_state['values']['form_build_id']);
   foreach ($form_state['values'] as $block) {
     $block['status'] = $block['region'] != BLOCK_REGION_NONE;
     $block['region'] = $block['status'] ? $block['region'] : '';

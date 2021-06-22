@@ -802,7 +802,7 @@ function _filter_htmlcorrector($text) {
       else {
         list($tagname) = preg_split('/\s/', strtolower($value), 2);
         // Closing tag
-        if ($tagname{0} == '/') {
+        if ($tagname[0] == '/') {
           $tagname = substr($tagname, 1);
           // Discard XHTML closing tags for single use tags.
           if (!isset($single_use[$tagname])) {
