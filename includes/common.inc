@@ -676,13 +676,26 @@ function drupal_http_request($url, $headers = array(), $method = 'GET', $data = 
  */
 
 /**
- * Log errors as defined by administrator.
+ * Drupal's PHP error handler (set in _drupal_bootstrap_full()).
  *
- * Error levels:
+ * The value of the 'error_level' variable determines the type of logging:
  * - 0 = Log errors to database.
  * - 1 = Log errors to database and to screen.
+ * Notices and Deprecated messages are never logged.
+ *
+ * @param int $errno
+ *   The level of the error raised.
+ * @param string $message
+ *   The error message.
+ * @param string $filename
+ *   The filename that the error was raised in.
+ * @param int $line
+ *   The line number the error was raised at.
+ * @param array $context
+ *   (Optional) array that points to the active symbol table at the point the
+ *   error occurred. Not passed by PHP >= 8.
  */
-function drupal_error_handler($errno, $message, $filename, $line, $context) {
+function drupal_error_handler($errno, $message, $filename, $line, $context = NULL) {
   // If the @ error suppression operator was used, error_reporting will have
   // been temporarily set to 0.
   if (error_reporting() == 0) {
