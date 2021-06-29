@@ -69,7 +69,8 @@ function _menu_overview_tree_form($tree) {
       $mlid = 'mlid:'. $item['mlid'];
       $form[$mlid]['#item'] = $item;
       $form[$mlid]['#attributes'] = $item['hidden'] ? array('class' => 'menu-disabled') : array('class' => 'menu-enabled');
-      $form[$mlid]['title']['#value'] = l($item['title'], $item['href'], $item['localized_options']) . ($item['hidden'] ? ' ('. t('disabled') .')' : '');
+      $form[$mlid]['title']['#value'] = l($item['title'], $item['href'], $item['localized_options']);
+      menu_add_link_labels($form[$mlid]['title']['#value'], $item);
       $form[$mlid]['hidden'] = array(
         '#type' => 'checkbox',
         '#default_value' => !$item['hidden'],

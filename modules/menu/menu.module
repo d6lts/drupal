@@ -206,6 +206,8 @@ function menu_load($menu_name) {
  *   and mlid. The list excludes the given item and its children.
  */
 function menu_parent_options($menus, $item) {
+  global $menu_admin;
+
   // The menu_links table can be practically any size and we need a way to
   // allow contrib modules to provide more scalable pattern choosers.
   // hook_form_alter is too late in itself because all the possible parents are
@@ -213,6 +215,9 @@ function menu_parent_options($menus, $item) {
   if (variable_get('menu_override_parent_selector', FALSE)) {
     return array();
   }
+
+  $menu_admin = TRUE;
+
   // If the item has children, there is an added limit to the depth of valid parents.
   if (isset($item['parent_depth_limit'])) {
     $limit = $item['parent_depth_limit'];
@@ -226,6 +231,8 @@ function menu_parent_options($menus, $item) {
     $options[$menu_name .':0'] = '<'. $title .'>';
     _menu_parents_recurse($tree, $menu_name, '--', $options, $item['mlid'], $limit);
   }
+
+  $menu_admin = FALSE;
   return $options;
 }
 
@@ -240,14 +247,33 @@ function _menu_parents_recurse($tree, $menu_name, $indent, &$options, $exclude, 
     }
     if ($data['link']['mlid'] != $exclude && $data['link']['hidden'] >= 0) {
       $title = $indent .' '. truncate_utf8($data['link']['title'], 30, TRUE, FALSE);
-      if ($data['link']['hidden']) {
-        $title .= ' ('. t('disabled') .')';
-      }
+      menu_add_link_labels($title, $data['link']);
       $options[$menu_name .':'. $data['link']['mlid']] = $title;
       if ($data['below']) {
         _menu_parents_recurse($data['below'], $menu_name, $indent .'--', $options, $exclude, $depth_limit);
       }
     }
+  }
+}
+
+/**
+ * Adds labels to the title of a hidden, unpublished or logged-in menu link.
+ *
+ * @param string $title
+ *   The title of the menu link. This will be modified as necessary to add the
+ *   appropriate label in parentheses at the end.
+ * @param array $item
+ *   An array representing the menu link item.
+ */
+function menu_add_link_labels(&$title, $item) {
+  if ($item['hidden']) {
+    $title .= ' (' . t('disabled') . ')';
+  }
+  elseif (!empty($item['node_unpublished'])) {
+    $title .= ' (' . t('unpublished') . ')';
+  }
+  elseif ($item['link_path'] == 'user' && $item['module'] == 'system') {
+    $title .= ' (' . t('logged in users only') . ')';
   }
 }
 
