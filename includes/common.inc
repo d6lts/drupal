@@ -1192,7 +1192,7 @@ function format_xml_elements($array) {
   $output = '';
   foreach ($array as $key => $value) {
     if (is_numeric($key)) {
-      if ($value['key']) {
+      if (!empty($value['key'])) {
         $output .= ' <'. $value['key'];
         if (isset($value['attributes']) && is_array($value['attributes'])) {
           $output .= drupal_attributes($value['attributes']);
@@ -2054,12 +2054,28 @@ function drupal_build_css_cache($types, $filename) {
  * Helper function for drupal_build_css_cache().
  *
  * This function will prefix all paths within a CSS file.
+ *
+ * @param array|null $matches
+ *   A 'matches' array as would be populated by e.g. preg_match() - meaning
+ *   $matches[0] has text that matched the full pattern and $matches[1] has
+ *   text that matched the first captured parenthesized subpattern. We assume
+ *   $matchesIf NULL,
+ *   then don't return anything useful; only set the base path for future calls.
+ * @param string|null $base
+ *   The base path to use for prefixing.
+ *
+ * @return string|null
+ *   A CSS path (prefixed, and surrounded with "url()" - or NULL if the first
+ *   parameter was NULL.
  */
 function _drupal_build_css_path($matches, $base = NULL) {
   static $_base;
   // Store base path for preg_replace_callback.
   if (isset($base)) {
     $_base = $base;
+  }
+  if (!isset($matches[1])) {
+    return NULL;
   }
 
   // Prefix with base and remove '../' segments where possible.

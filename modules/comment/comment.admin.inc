@@ -33,7 +33,7 @@ function comment_admin($type = 'new') {
  * @see comment_admin_overview_submit()
  * @see theme_comment_admin_overview()
  */
-function comment_admin_overview($type = 'new', $arg) {
+function comment_admin_overview($type, $arg) {
   // build an 'Update options' form
   $form['options'] = array(
     '#type' => 'fieldset', '#title' => t('Update options'),

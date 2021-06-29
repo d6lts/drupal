@@ -192,7 +192,11 @@ function db_result($result) {
     // The mysql_fetch_row function has an optional second parameter $row
     // but that can't be used for compatibility with Oracle, DB2, etc.
     $array = mysql_fetch_row($result);
-    return $array[0];
+    // This function was never meant to be used multiple times on the same
+    // result set (resulting in $array being FALSE). But the above spec is not
+    // absolutely clear about that, so various code is doing it, and PHP < 7.4
+    // didn't emit any PHP Notices. So now, we effectively support it...
+    return isset($array[0]) ? $array[0] : FALSE;
   }
   return FALSE;
 }

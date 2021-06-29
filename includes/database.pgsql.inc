@@ -206,7 +206,11 @@ function db_fetch_array($result) {
 function db_result($result) {
   if ($result && pg_num_rows($result) > 0) {
     $array = pg_fetch_row($result);
-    return $array[0];
+    // This function was never meant to be used multiple times on the same
+    // result set (resulting in $array being FALSE). But the above spec is not
+    // absolutely clear about that, so various code is doing it, and PHP < 7.4
+    // didn't emit any PHP Notices. So now, we effectively support it...
+    return isset($array[0]) ? $array[0] : FALSE;
   }
   return FALSE;
 }
