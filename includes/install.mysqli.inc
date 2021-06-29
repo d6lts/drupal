@@ -33,6 +33,7 @@ function drupal_test_mysqli($url, &$success) {
   $url['path'] = urldecode($url['path']);
   $url['port'] = isset($url['port']) ? $url['port'] : NULL;
 
+  mysqli_report(MYSQLI_REPORT_OFF);
   $connection = mysqli_init();
   @mysqli_real_connect($connection, $url['host'], $url['user'], $url['pass'], substr($url['path'], 1), $url['port'], NULL, MYSQLI_CLIENT_FOUND_ROWS);
   if (mysqli_connect_errno() >= 2000 || mysqli_connect_errno() == 1045) {
