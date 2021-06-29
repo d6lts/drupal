@@ -1675,7 +1675,7 @@ function theme_blocks($region) {
  */
 function theme_username($object) {
 
-  if ($object->uid && $object->name) {
+  if (!empty($object->uid) && !empty($object->name)) {
     // Shorten the name when it is too long or it will break many tables.
     if (drupal_strlen($object->name) > 20) {
       $name = drupal_substr($object->name, 0, 15) .'...';
@@ -1691,7 +1691,7 @@ function theme_username($object) {
       $output = check_plain($name);
     }
   }
-  else if ($object->name) {
+  else if (!empty($object->name)) {
     // Sometimes modules display content composed by people who are
     // not registered members of the site (e.g. mailing list or news
     // aggregator modules). This clause enables modules to display
