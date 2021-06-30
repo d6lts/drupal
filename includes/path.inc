@@ -13,7 +13,7 @@
  * Initialize the $_GET['q'] variable to the proper normal path.
  */
 function drupal_init_path() {
-  if (!empty($_GET['q'])) {
+  if (!empty($_GET['q']) && is_string($_GET['q'])) {
     $_GET['q'] = drupal_get_normal_path(trim($_GET['q'], '/'));
   }
   else {
