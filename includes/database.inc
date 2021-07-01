@@ -387,38 +387,38 @@ function db_version_compare($driver, $version, $operator = '>=') {
 function db_prefix_tables($sql) {
   global $db_prefix, $db_mysql8_reserved_keywords;
 
-  // Add prefixes.
+  // Identify prefix settings to apply.
   if (is_array($db_prefix)) {
+    $db_prefix_local = $db_prefix;
     if (array_key_exists('default', $db_prefix)) {
-      $tmp = $db_prefix;
-      unset($tmp['default']);
-
-      foreach ($tmp as $key => $val) {
-        $sql = strtr($sql, array('{' . $key . '}' => '{' . $val . $key . '}'));
-      }
-      $sql = strtr($sql, array('{' => '{' . $db_prefix['default']));
+      unset($db_prefix_local['default']);
+      $default_replacement = $db_prefix['default'];
     }
     else {
-      foreach ($db_prefix as $key => $val) {
-        $sql = strtr($sql, array('{' . $key . '}' => '{' . $val . $key . '}'));
-      }
+      $default_replacement = '';
     }
   }
   else {
-    $sql = strtr($sql, array('{' => '{' . $db_prefix));
+    $db_prefix_local = array();
+    $default_replacement = $db_prefix;
   }
 
-  // Need to escape reserved keywords for MySQL 8.
+  // Add prefixes and transform curly braces into pipes in order to mark already done operations
+  // while preserving table name encapsulation for the next step.
+  foreach ($db_prefix_local as $table_name => $prefix) {
+    $sql = strtr($sql, array('{' . $table_name . '}' => '|' . $prefix . $table_name . '|'));
+  }
+  $sql = strtr($sql, array('{' => '|' . $default_replacement, '}' => '|'));
+
+  // For MySQL 8, escape table names corersponding to reserved keywords.
   if (db_version_compare('mysql', '8.0.0')) {
     foreach ($db_mysql8_reserved_keywords as $keyword) {
-      $sql = str_replace('{' . $keyword . '}', '`{' . $keyword . '}`', $sql);
+      $sql = str_replace('|' . $keyword . '|', '`' . $keyword . '`', $sql);
     }
   }
 
-  // Remove curly braces.
-  $sql = strtr($sql, array('{' => '', '}' => ''));
-
-  return $sql;
+  // Remove pipes.
+  return str_replace('|', '', $sql);
 }
 
 /**
