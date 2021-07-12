@@ -1,3 +1,11 @@
+Drupal 6.58, 2021-07-12 - Long term support
+---------------------------------------
+- Initial support for PHP 8.0.
+- Updated .htaccess for SA-CORE-2016-003 (hardening) and to protect .git and
+  other VCS directories.
+- Fixed double prefixing when $db_prefix is an array.
+- Fixed numerous smaller bugs.
+
 Drupal 6.57, 2021-04-21 - Long term support
 ---------------------------------------
 - Fixed security (Critical - Cross-site scripting - SA-CORE-2021-002)
