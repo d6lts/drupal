@@ -4,3 +4,9 @@ version = VERSION
 core = 6.x
 base theme = garland
 stylesheets[all][] = minnelli.css
+
+; Information added by Drupal 6 LTS vendors on 2021-07-12
+version = "6.x-6.58"
+core = "6.x"
+project = "drupal"
+datestamp = "1626111301"
