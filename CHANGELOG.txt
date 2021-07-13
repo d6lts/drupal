@@ -1,3 +1,7 @@
+Drupal 6.59, 2021-07-13 - Long term support
+---------------------------------------
+- Fixed mistake in packaging 6.58
+
 Drupal 6.58, 2021-07-12 - Long term support
 ---------------------------------------
 - Initial support for PHP 8.0.
