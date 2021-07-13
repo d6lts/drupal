@@ -3,9 +3,3 @@ description = "Aggregates syndicated content (RSS, RDF, and Atom feeds)."
 package = Core - optional
 version = VERSION
 core = 6.x
-
-; Information added by Drupal 6 LTS vendors on 2021-07-13
-version = "6.59"
-core = "6.x"
-project = "drupal"
-datestamp = "1626201888"
