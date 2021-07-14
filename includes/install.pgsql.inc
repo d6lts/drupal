@@ -100,7 +100,7 @@ function drupal_test_pgsql($url, &$success) {
   // Test UNLOCK, which is done automatically upon transaction end in PostgreSQL
   $query = 'COMMIT';
   $result = pg_query($connection, $query);
-  if ($error = pg_result_error()) {
+  if ($error = pg_result_error($result)) {
     drupal_set_message(st('Failed to unlock a test table on your PostgreSQL database server. We tried unlocking a table with the command %query and PostgreSQL reported the following error: %error.', array('%query' => $query, '%error' => $error)), 'error');
     $err = TRUE;
   }
@@ -111,7 +111,7 @@ function drupal_test_pgsql($url, &$success) {
   // Test DELETE.
   $query = 'DELETE FROM drupal_install_test';
   $result = pg_query($connection, $query);
-  if ($error = pg_result_error()) {
+  if ($error = pg_result_error($result)) {
     drupal_set_message(st('Failed to delete a value from a test table on your PostgreSQL database server. We tried deleting a value with the command %query and PostgreSQL reported the following error: %error.', array('%query' => $query, '%error' => $error)), 'error');
     $err = TRUE;
   }
@@ -122,7 +122,7 @@ function drupal_test_pgsql($url, &$success) {
   // Test DROP.
   $query = 'DROP TABLE drupal_install_test';
   $result = pg_query($connection, $query);
-  if ($error = pg_result_error()) {
+  if ($error = pg_result_error($result)) {
     drupal_set_message(st('Failed to drop a test table from your PostgreSQL database server. We tried dropping a table with the command %query and PostgreSQL reported the following error %error.', array('%query' => $query, '%error' => $error)), 'error');
     $err = TRUE;
   }

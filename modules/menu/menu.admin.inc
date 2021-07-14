@@ -42,7 +42,7 @@ function menu_overview_form(&$form_state, $menu) {
   menu_tree_check_access($tree, $node_links);
   $menu_admin = FALSE;
 
-  $form = _menu_overview_tree_form($tree);
+  $form = _menu_overview_tree_form($tree, $form_state);
   $form['#menu'] =  $menu;
   if (element_children($form)) {
     $form['submit'] = array(
@@ -59,7 +59,7 @@ function menu_overview_form(&$form_state, $menu) {
 /**
  * Recursive helper function for menu_overview_form().
  */
-function _menu_overview_tree_form($tree) {
+function _menu_overview_tree_form($tree, $form_state) {
   static $form = array('#tree' => TRUE);
   foreach ($tree as $data) {
     $title = '';
@@ -112,7 +112,7 @@ function _menu_overview_tree_form($tree) {
     }
 
     if ($data['below']) {
-      _menu_overview_tree_form($data['below']);
+      _menu_overview_tree_form($data['below'], $form_state);
     }
   }
   return $form;

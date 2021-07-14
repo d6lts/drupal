@@ -245,14 +245,14 @@ function _openid_signature($association, $message_array, $keys_to_sign) {
 
 function _openid_hmac($key, $text) {
   if (strlen($key) > OPENID_SHA1_BLOCKSIZE) {
-    $key = _openid_sha1($key, true);
+    $key = _openid_sha1($key);
   }
 
   $key = str_pad($key, OPENID_SHA1_BLOCKSIZE, chr(0x00));
   $ipad = str_repeat(chr(0x36), OPENID_SHA1_BLOCKSIZE);
   $opad = str_repeat(chr(0x5c), OPENID_SHA1_BLOCKSIZE);
-  $hash1 = _openid_sha1(($key ^ $ipad) . $text, true);
-  $hmac = _openid_sha1(($key ^ $opad) . $hash1, true);
+  $hash1 = _openid_sha1(($key ^ $ipad) . $text);
+  $hmac = _openid_sha1(($key ^ $opad) . $hash1);
 
   return $hmac;
 }

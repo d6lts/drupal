@@ -143,7 +143,7 @@ function _batch_progress_page_nojs() {
     print $fallback;
 
     // Perform actual processing.
-    list($percentage, $message) = _batch_process($batch);
+    list($percentage, $message) = _batch_process();
     if ($percentage == 100) {
       $new_op = 'finished';
     }
