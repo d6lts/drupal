@@ -1003,7 +1003,7 @@ function menu_tree_collect_node_links(&$tree, &$node_links) {
  */
 function menu_tree_check_access(&$tree, $node_links = array()) {
 
-  if ($node_links && (user_access('access content') || user_access('bypass node access'))) {
+  if ($node_links && (user_access('access content') || user_access('administer nodes'))) {
     // Use db_rewrite_sql to evaluate view access without loading each full node.
     $nids = array_keys($node_links);
     $placeholders = '%d'. str_repeat(', %d', count($nids) - 1);
@@ -1011,7 +1011,7 @@ function menu_tree_check_access(&$tree, $node_links = array()) {
     // nodes is administering the menu, included the unpublished nodes in the
     // tree, with a special flag so that the Menu module can label them.
     // Otherwise, exclude these nodes from the tree.
-    if (!empty($GLOBALS['menu_admin']) && user_access('bypass node access')) {
+    if (!empty($GLOBALS['menu_admin']) && user_access('administer nodes')) {
       $sql = "SELECT n.nid, n.status FROM {node} n WHERE n.nid IN (". $placeholders .")";
     }
     else {
