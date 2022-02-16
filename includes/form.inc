@@ -1083,7 +1083,7 @@ function _form_builder_handle_input_element($form_id, &$form, &$form_state, $com
   // For pages with multiple forms, ensure that input is only processed for the
   // submitted form. drupal_execute() may bypass these checks and be treated as
   // a high privilege user submitting a single form.
-  $process_input = $form['#programmed'] || ((!isset($form['#access']) || $form['#access']) && isset($form['#post']) && (isset($form['#post']['form_id']) && $form['#post']['form_id'] == $form_id));
+  $process_input = $form['#programmed'] || ($form['#type'] != 'value' && (!isset($form['#access']) || $form['#access']) && isset($form['#post']) && (isset($form['#post']['form_id']) && $form['#post']['form_id'] == $form_id));
 
   if (!isset($form['#value']) && !array_key_exists('#value', $form)) {
     $function = !empty($form['#value_callback']) ? $form['#value_callback'] : 'form_type_'. $form['#type'] .'_value';
