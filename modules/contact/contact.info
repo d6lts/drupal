@@ -3,9 +3,3 @@ description = Enables the use of both personal and site-wide contact forms.
 package = Core - optional
 version = VERSION
 core = 6.x
-
-; Information added by Drupal 6 LTS vendors on 2022-02-16
-version = "6.60"
-core = "6.x"
-project = "drupal"
-datestamp = "1645029306"
