@@ -1553,7 +1553,7 @@ function menu_set_active_trail($new_trail = NULL) {
     $item = menu_get_item();
 
     // Check whether the current item is a local task (displayed as a tab).
-    if ($item['tab_parent']) {
+    if (!empty($item['tab_parent'])) {
       // The title of a local task is used for the tab, never the page title.
       // Thus, replace it with the item corresponding to the root path to get
       // the relevant href and title.  For example, the menu item corresponding
@@ -1597,7 +1597,7 @@ function menu_set_active_trail($new_trail = NULL) {
     // Make sure the current page is in the trail (needed for the page title),
     // but exclude tabs and the front page.
     $last = count($trail) - 1;
-    if ($trail[$last]['href'] != $item['href'] && !(bool)($item['type'] & MENU_IS_LOCAL_TASK) && !drupal_is_front_page()) {
+    if ($item && $trail[$last]['href'] != $item['href'] && !(bool)($item['type'] & MENU_IS_LOCAL_TASK) && !drupal_is_front_page()) {
       $trail[] = $item;
     }
   }

@@ -22,7 +22,7 @@ function contact_admin_categories() {
 /**
  * Category edit page.
  */
-function contact_admin_edit($form_state = array(), $op, $contact = NULL) {
+function contact_admin_edit($form_state, $op, $contact = NULL) {
 
   if (empty($contact) || $op == 'add') {
     $contact = array(

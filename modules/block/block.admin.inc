@@ -161,7 +161,7 @@ function block_admin_configure(&$form_state, $module = NULL, $delta = 0) {
     '#title' => t('Block title'),
     '#maxlength' => 64,
     '#description' => $module == 'block' ? t('The title of the block as shown to the user.') : t('Override the default title for the block. Use <em>&lt;none&gt;</em> to display no title, or leave blank to use the default block title.'),
-    '#default_value' => $edit['title'],
+    '#default_value' => $edit ? $edit['title'] : NULL,
     '#weight' => -18,
   );
 
@@ -194,7 +194,7 @@ function block_admin_configure(&$form_state, $module = NULL, $delta = 0) {
       t('Hide this block by default but let individual users show it.')
     ),
     '#description' => t('Allow individual users to customize the visibility of this block in their account settings.'),
-    '#default_value' => $edit['custom'],
+    '#default_value' => $edit ? $edit['custom'] : NULL,
   );
 
   // Role-based visibility settings
@@ -228,7 +228,7 @@ function block_admin_configure(&$form_state, $module = NULL, $delta = 0) {
   );
   $access = user_access('use PHP for block visibility');
 
-  if ($edit['visibility'] == 2 && !$access) {
+  if ($edit && $edit['visibility'] == 2 && !$access) {
     $form['page_vis_settings'] = array();
     $form['page_vis_settings']['visibility'] = array('#type' => 'value', '#value' => 2);
     $form['page_vis_settings']['pages'] = array('#type' => 'value', '#value' => $edit['pages']);
@@ -245,12 +245,12 @@ function block_admin_configure(&$form_state, $module = NULL, $delta = 0) {
       '#type' => 'radios',
       '#title' => t('Show block on specific pages'),
       '#options' => $options,
-      '#default_value' => $edit['visibility'],
+      '#default_value' =>  $edit ? $edit['visibility'] : NULL,
     );
     $form['page_vis_settings']['pages'] = array(
       '#type' => 'textarea',
       '#title' => t('Pages'),
-      '#default_value' => $edit['pages'],
+      '#default_value' => $edit ? $edit['pages'] : NULL,
       '#description' => $description,
     );
   }
