@@ -1734,7 +1734,7 @@ function _locale_parse_js_file($filepath) {
       if ($source = db_fetch_object($result)) {
         // We already have this source string and now have to add the location
         // to the location column, if this file is not yet present in there.
-        $locations = preg_split('~\s*;\s*~', $source->location);
+        $locations = preg_split('~\s*;\s*~', (string) $source->location);
 
         if (!in_array($filepath, $locations)) {
           $locations[] = $filepath;

@@ -322,8 +322,9 @@ function update_form_alter(&$form, $form_state, $form_id) {
  */
 function _update_no_data() {
   $destination = drupal_get_destination();
+  $cron_token = array('token' => drupal_get_token('run-cron'));
   return t('No information is available about potential new releases for currently installed modules and themes. To check for updates, you may need to <a href="@run_cron">run cron</a> or you can <a href="@check_manually">check manually</a>. Please note that checking for available updates can take a long time, so please be patient.', array(
-    '@run_cron' => url('admin/reports/status/run-cron', array('query' => $destination)),
+    '@run_cron' => url('admin/reports/status/run-cron', array('query' => $cron_token + $destination)),
     '@check_manually' => url('admin/reports/updates/check', array('query' => $destination)),
   ));
 }

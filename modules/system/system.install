@@ -197,7 +197,7 @@ function system_requirements($phase) {
       'title' => $t('Cron maintenance tasks'),
       'severity' => $severity,
       'value' => $summary,
-      'description' => $description .' '. $t('You can <a href="@cron">run cron manually</a>.', array('@cron' => url('admin/reports/status/run-cron'))),
+      'description' => $description .' '. $t('You can <a href="@cron">run cron manually</a>.', array('@cron' => url('admin/reports/status/run-cron', array('query' => array('token' => drupal_get_token('run-cron')))))),
     );
   }
 
