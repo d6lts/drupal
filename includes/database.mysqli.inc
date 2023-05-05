@@ -40,7 +40,6 @@ function db_status_report($phase) {
 /**
  * Returns the version of the database server currently in use.
  *
- * @return Database server version
  */
 function db_version() {
   global $active_db;
@@ -333,7 +332,7 @@ function db_decode_blob($data) {
  */
 function db_escape_string($text) {
   global $active_db;
-  return mysqli_real_escape_string($active_db, $text);
+  return mysqli_real_escape_string($active_db, $text ?? '');
 }
 
 /**

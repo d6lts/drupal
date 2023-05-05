@@ -447,13 +447,13 @@ function node_get_types($op = 'types', $node = NULL, $reset = FALSE) {
     case 'types':
       return $_node_types;
     case 'type':
-      return isset($_node_types[$type]) ? $_node_types[$type] : FALSE;
+      return isset($type) && isset($_node_types[$type]) ? $_node_types[$type] : FALSE;
     case 'module':
-      return isset($_node_types[$type]->module) ? $_node_types[$type]->module : FALSE;
+      return isset($type) && isset($_node_types[$type]->module) ? $_node_types[$type]->module : FALSE;
     case 'names':
       return $_node_names;
     case 'name':
-      return isset($_node_names[$type]) ? $_node_names[$type] : FALSE;
+      return isset($type) && isset($_node_names[$type]) ? $_node_names[$type] : FALSE;
   }
 }
 
@@ -1048,13 +1048,13 @@ function node_prepare($node, $teaser = FALSE) {
   // First we'll overwrite the existing node teaser and body with
   // the filtered copies! Then, we'll stick those into the content
   // array and set the read more flag if appropriate.
-  $node->readmore = $node->teaser != $node->body;
+  $node->readmore = property_exists($node, 'teaser') && $node->teaser != $node->body;
 
   if ($teaser == FALSE) {
     $node->body = check_markup($node->body, $node->format, FALSE);
   }
   else {
-    $node->teaser = check_markup($node->teaser, $node->format, FALSE);
+    $node->teaser = check_markup(($node->teaser ?? ''), $node->format, FALSE);
   }
 
   $node->content['body'] = array(

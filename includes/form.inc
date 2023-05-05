@@ -476,7 +476,7 @@ function drupal_process_form($form_id, &$form, &$form_state) {
       // possibly ending execution. We make sure we do not react to the batch
       // that is already being processed (if a batch operation performs a
       // drupal_execute).
-      if ($batch =& batch_get() && !isset($batch['current_set'])) {
+      if ($batch = batch_get() && !isset($batch['current_set'])) {
         // The batch uses its own copies of $form and $form_state for
         // late execution of submit handers and post-batch redirection.
         $batch['form'] = $form;
@@ -1379,7 +1379,7 @@ function form_type_textfield_value($form, $edit = FALSE) {
   if ($edit !== FALSE) {
     // Equate $edit to the form value to ensure it's marked for
     // validation.
-    return str_replace(array("\r", "\n"), '', $edit);
+    return str_replace(array("\r", "\n"), '', $edit ?? '');
   }
 }
 

@@ -576,7 +576,9 @@ function _menu_translate(&$router_item, $map, $to_arg = FALSE) {
   $link_map = explode('/', $router_item['path']);
   for ($i = 0; $i < $router_item['number_parts']; $i++) {
     if ($link_map[$i] == '%') {
-      $link_map[$i] = $path_map[$i];
+      if (array_key_exists($i, $path_map)) {
+        $link_map[$i] = $path_map[$i];
+      }
     }
   }
   $router_item['href'] = implode('/', $link_map);

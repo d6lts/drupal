@@ -760,6 +760,8 @@ function comment_save($edit) {
           $edit['name'] = $user->name;
         }
 
+        $edit['format'] = $edit['format'] ?? FILTER_FORMAT_DEFAULT;
+
         db_query("INSERT INTO {comments} (nid, pid, uid, subject, comment, format, hostname, timestamp, status, thread, name, mail, homepage) VALUES (%d, %d, %d, '%s', '%s', %d, '%s', %d, %d, '%s', '%s', '%s', '%s')", $edit['nid'], $edit['pid'], $edit['uid'], $edit['subject'], $edit['comment'], $edit['format'], ip_address(), $edit['timestamp'], $edit['status'], $thread, $edit['name'], $edit['mail'], $edit['homepage']);
         $edit['cid'] = db_last_insert_id('comments', 'cid');
 
