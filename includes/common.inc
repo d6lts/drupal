@@ -2691,35 +2691,18 @@ function drupal_json($var = NULL) {
 }
 
 /**
- * Wrapper around urlencode() which avoids Apache quirks.
+ * Encodes a Drupal path for use in a URL.
  *
- * Should be used when placing arbitrary data in an URL. Note that Drupal paths
- * are urlencoded() when passed through url() and do not require urlencoding()
- * of individual components.
+ * For aesthetic reasons slashes are not escaped.
  *
- * Notes:
- * - For esthetic reasons, we do not escape slashes. This also avoids a 'feature'
- *   in Apache where it 404s on any path containing '%2F'.
- * - mod_rewrite unescapes %-encoded ampersands, hashes, and slashes when clean
- *   URLs are used, which are interpreted as delimiters by PHP. These
- *   characters are double escaped so PHP will still see the encoded version.
- * - With clean URLs, Apache changes '//' to '/', so every second slash is
- *   double escaped.
- * - This function should only be used on paths, not on query string arguments,
- *   otherwise unwanted double encoding will occur.
+ * Note that url() takes care of calling this function, so a path passed to that
+ * function should not be encoded in advance.
  *
- * @param $text
- *   String to encode
+ * @param $path
+ *   The Drupal path to encode.
  */
 function drupal_urlencode($text) {
-  if (variable_get('clean_url', '0')) {
-    return str_replace(array('%2F', '%26', '%23', '//'),
-                       array('/', '%2526', '%2523', '/%252F'),
-                       rawurlencode($text));
-  }
-  else {
-    return str_replace('%2F', '/', rawurlencode($text));
-  }
+  return str_replace('%2F', '/', rawurlencode($text));
 }
 
 /**

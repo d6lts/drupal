@@ -521,6 +521,10 @@ function file_unmunge_filename($filename) {
  * @return
  */
 function file_create_filename($basename, $directory) {
+  // Strip control characters (ASCII value < 32). Though these are allowed in
+  // some filesystems, not many applications handle them well.
+  $basename = preg_replace('/[\x00-\x1F]/u', '_', $basename);
+
   $dest = $directory .'/'. $basename;
 
   if (file_exists($dest)) {
