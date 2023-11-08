@@ -163,10 +163,12 @@ function install_main() {
  * Verify if Drupal is installed.
  */
 function install_verify_drupal() {
-  // Read the variable manually using the @ so we don't trigger an error if it fails.
-  $result = @db_query("SELECT value FROM {variable} WHERE name = '%s'", 'install_task');
-  if ($result) {
-    return unserialize(db_result($result));
+  if(db_table_exists('variable')) {
+    // Read the variable manually using the @ so we don't trigger an error if it fails.
+    $result = @db_query("SELECT value FROM {variable} WHERE name = '%s'", 'install_task');
+    if ($result) {
+      return unserialize(db_result($result));
+    }
   }
 }
 

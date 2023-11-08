@@ -153,18 +153,19 @@ $update_free_access = FALSE;
  * settings are used there. Settings defined here should not be
  * duplicated there so as to avoid conflict issues.
  */
-ini_set('arg_separator.output',     '&amp;');
-ini_set('magic_quotes_runtime',     0);
-ini_set('magic_quotes_sybase',      0);
-ini_set('session.cache_expire',     200000);
-ini_set('session.cache_limiter',    'none');
-ini_set('session.cookie_lifetime',  2000000);
-ini_set('session.gc_maxlifetime',   200000);
-ini_set('session.use_cookies',      1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.use_trans_sid',    0);
-ini_set('url_rewriter.tags',        '');
-
+if (PHP_VERSION_ID < 80000) {
+  ini_set('arg_separator.output', '&amp;');
+  ini_set('magic_quotes_runtime', 0);
+  ini_set('magic_quotes_sybase', 0);
+  ini_set('session.cache_expire', 200000);
+  ini_set('session.cache_limiter', 'none');
+  ini_set('session.cookie_lifetime', 2000000);
+  ini_set('session.gc_maxlifetime', 200000);
+  ini_set('session.use_cookies', 1);
+  ini_set('session.use_only_cookies', 1);
+  ini_set('session.use_trans_sid', 0);
+  ini_set('url_rewriter.tags', '');
+}
 /**
  * If you encounter a situation where users post a large amount of text, and
  * the result is stripped out upon viewing but can still be edited, Drupal's

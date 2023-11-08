@@ -519,15 +519,14 @@ function user_access($string, $account = NULL, $reset = FALSE) {
   if (!isset($account)) {
     $account = $user;
   }
-
   // User #1 has all privileges:
-  if ($account->uid == 1) {
+  if ((int) ($account->uid ?? 0) === 1) {
     return TRUE;
   }
 
   // To reduce the number of SQL queries, we cache the user's permissions
   // in a static variable.
-  if (!isset($perm[$account->uid])) {
+  if (!isset($perm[$account->uid ?? 0]) && !empty($account->roles)) {
     $result = db_query("SELECT p.perm FROM {role} r INNER JOIN {permission} p ON p.rid = r.rid WHERE r.rid IN (". db_placeholders($account->roles) .")", array_keys($account->roles));
 
     $perms = array();
